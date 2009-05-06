@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ ! -d ~/.xmonad ]; then
+  mkdir -p ~/.xmonad
+  cp /etc/skel/.xmonad/xmonad.hs ~/.xmonad/
+fi
+
+exec xmonad
