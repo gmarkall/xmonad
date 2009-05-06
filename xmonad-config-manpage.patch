@@ -1,6 +1,6 @@
-diff -r -u -X /home/yankee/Projekten/fedora-devshell/diff.excludes .pkg_src/branches/xmonad-0.8.1_orig/man/xmonad.hs ./man/xmonad.hs
---- .pkg_src/branches/xmonad-0.8.1_orig/man/xmonad.hs	2009-01-16 17:47:27.000000000 -0500
-+++ ./man/xmonad.hs	2009-04-27 18:31:12.195829219 -0400
+diff -r -u -X /home/yankee/Projekten/fedora-devshell/diff.excludes xmonad-0.8.1_orig/man/xmonad.hs xmonad-0.8.1/man/xmonad.hs
+--- xmonad-0.8.1_orig/man/xmonad.hs	2009-01-16 17:47:27.000000000 -0500
++++ xmonad-0.8.1/man/xmonad.hs	2009-04-27 18:31:12.195829219 -0400
 @@ -246,7 +246,8 @@
  
  -- Run xmonad with the settings you specify. No need to modify this.

@@ -8,7 +8,7 @@
 
 Name:           xmonad
 Version:        0.8.1
-Release:        11%{?dist}
+Release:        12%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -17,7 +17,7 @@ URL:            http://hackage.haskell.org/cgi-bin/hackage-scripts/package/%{nam
 Source0:        http://hackage.haskell.org/packages/archive/%{name}/%{version}/%{name}-%{version}.tar.gz
 Source1:        xmonad.desktop
 Source2:        xmonad-start
-Patch0:		manpage.patch
+Patch0:         xmonad-config-manpage.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 # fedora ghc archs:
 ExclusiveArch: %{ix86} x86_64 ppc alpha
@@ -91,7 +91,7 @@ This package contains profiling libraries for %{name}.
 
 %prep
 %setup -q
-%patch0 -p0
+%patch0 -p1 -b .orig
 
 %build
 %ifarch ppc
@@ -149,7 +149,7 @@ fi
 
 %files
 %defattr(-,root,root,-)
-%doc CONFIG LICENSE README STYLE TODO man/%{name}.hs
+%doc CONFIG LICENSE README STYLE TODO man/%{name}.hs.orig
 %attr(755,root,root) %{_bindir}/%{name}
 %attr(755,root,root) %{_bindir}/%{name}-start
 %{_mandir}/man1/%{name}.1*
@@ -174,6 +174,13 @@ fi
 
 
 %changelog
+* Wed May  6 2009 Yaakov M. Nemoy <ynemoy@fedoraproject.org> - 0.8.1-12
+- applies changes from jens' patch
+- renames xmonad.desktop entry
+- adds .orig of the xmonad default config
+- modifies manpage patch to use 'better' filenames
+- renames manpage patch
+
 * Mon Apr 27 2009 Yaakov M. Nemoy <yankee@localhost.localdomain> - 0.8.1-11
 - adds runghc hack taken from haddock
 

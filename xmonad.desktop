@@ -1,6 +1,6 @@
 [Desktop Entry]
 Encoding=UTF-8
-Name=xmonad-start
+Name=xmonad
 Comment=Tiling window manager
 Exec=xmonad-start
 Terminal=False
