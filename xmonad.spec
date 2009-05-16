@@ -8,7 +8,7 @@
 
 Name:           xmonad
 Version:        0.8.1
-Release:        12%{?dist}
+Release:        13%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -22,6 +22,7 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 # fedora ghc archs:
 ExclusiveArch: %{ix86} x86_64 ppc alpha
 BuildRequires:  ghc
+BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-X11-devel >= %{X11_version}
 %if %{with doc}
 BuildRequires:  ghc-doc
@@ -29,8 +30,6 @@ BuildRequires:  ghc-doc
 %if %{with prof}
 BuildRequires:  ghc-prof, ghc-X11-prof >= %{X11_version}
 %endif
-# for latest macros.ghc
-BuildRequires:  ghc >= 6.10.2-3
 Requires:       ghc-%{name}-devel = %{version}-%{release}
 # required until there is a command to open some system default
 # xterminal
@@ -174,6 +173,10 @@ fi
 
 
 %changelog
+* Sat May 16 2009 Jens Petersen <petersen@redhat.com> - 0.8.1-13
+- buildrequires ghc-rpm-macros (cabal2spec-0.16)
+- rebuild for ghc-6.10.3
+
 * Wed May  6 2009 Yaakov M. Nemoy <ynemoy@fedoraproject.org> - 0.8.1-12
 - applies changes from jens' patch
 - renames xmonad.desktop entry
