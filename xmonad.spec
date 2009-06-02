@@ -8,7 +8,7 @@
 
 Name:           xmonad
 Version:        0.8.1
-Release:        13%{?dist}
+Release:        14%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -21,8 +21,7 @@ Patch0:         xmonad-config-manpage.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 # fedora ghc archs:
 ExclusiveArch: %{ix86} x86_64 ppc alpha
-BuildRequires:  ghc
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc, ghc-rpm-macros
 BuildRequires:  ghc-X11-devel >= %{X11_version}
 %if %{with doc}
 BuildRequires:  ghc-doc
@@ -93,12 +92,6 @@ This package contains profiling libraries for %{name}.
 %patch0 -p1 -b .orig
 
 %build
-%ifarch ppc
-# hack around mysterious runghc fail
-%global cabal ./cabal
-ghc --make Setup -o cabal
-%endif
-
 %cabal_configure --ghc %{?with_prof:-p}
 %cabal build
 %if %{with doc}
@@ -173,6 +166,9 @@ fi
 
 
 %changelog
+* Tue Jun  2 2009 Jens Petersen <petersen@redhat.com> - 0.8.1-14
+- ppc runghc workaround no longer needed
+
 * Sat May 16 2009 Jens Petersen <petersen@redhat.com> - 0.8.1-13
 - buildrequires ghc-rpm-macros (cabal2spec-0.16)
 - rebuild for ghc-6.10.3
