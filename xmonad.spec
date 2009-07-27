@@ -8,7 +8,7 @@
 
 Name:           xmonad
 Version:        0.8.1
-Release:        13%{?dist}
+Release:        14%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -172,6 +172,9 @@ fi
 
 
 %changelog
+* Mon Jul 27 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.8.1-14
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
+
 * Sat May 16 2009 Jens Petersen <petersen@redhat.com> - 0.8.1-13
 - buildrequires ghc-rpm-macros (cabal2spec-0.16)
 - rebuild for ghc-6.10.3
