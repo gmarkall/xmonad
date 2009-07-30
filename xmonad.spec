@@ -8,7 +8,7 @@
 
 Name:           xmonad
 Version:        0.8.1
-Release:        14%{?dist}
+Release:        15%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -172,6 +172,9 @@ fi
 
 
 %changelog
+* Thu Jul 30 2009 Yaakov M. Nemoy <ynemoy@fedoraproject.org> - 0.8.1-15
+- rebuild against newer packages from the mass rebuild
+
 * Mon Jul 27 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.8.1-14
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
 
