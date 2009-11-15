@@ -10,4 +10,4 @@ diff -r -u -X /home/yankee/Projekten/fedora-devshell/diff.excludes xmonad-0.8.1_
 +          xmonad defaults
  
  -- A structure containing your configuration settings, overriding
- -- fields in the default config. Any you don't override, will 
+ -- fields in the default config. Any you don't override, will

@@ -1,4 +1,4 @@
-%global X11_version 1.4.3
+%global X11_minver 1.4.6.1
 
 %bcond_without doc
 %bcond_without prof
@@ -7,8 +7,8 @@
 %global debug_package %{nil}
 
 Name:           xmonad
-Version:        0.8.1
-Release:        15%{?dist}
+Version:        0.9
+Release:        1%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -22,12 +22,12 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 # fedora ghc archs:
 ExclusiveArch: %{ix86} x86_64 ppc alpha
 BuildRequires:  ghc, ghc-rpm-macros
-BuildRequires:  ghc-X11-devel >= %{X11_version}
+BuildRequires:  ghc-X11-devel >= %{X11_minver}
 %if %{with doc}
 BuildRequires:  ghc-doc
 %endif
 %if %{with prof}
-BuildRequires:  ghc-prof, ghc-X11-prof >= %{X11_version}
+BuildRequires:  ghc-prof, ghc-X11-prof >= %{X11_minver}
 %endif
 Requires:       ghc-%{name}-devel = %{version}-%{release}
 # required until there is a command to open some system default
@@ -51,7 +51,7 @@ on several screens.
 %package -n ghc-%{name}-devel
 Summary:        Haskell %{name} library
 Group:          Development/Libraries
-Requires:       ghc-X11-devel >= %{X11_version}
+Requires:       ghc-X11-devel
 Requires:       ghc = %{ghc_version}
 Requires(post): ghc = %{ghc_version}
 Requires(preun): ghc = %{ghc_version}
@@ -79,7 +79,7 @@ This package contains development documentation files for the %{name} library.
 Summary:        Profiling libraries for %{name}
 Group:          Development/Libraries
 Requires:       ghc-%{name}-devel = %{version}-%{release}
-Requires:       ghc-X11-prof >= %{X11_version}
+Requires:       ghc-X11-prof
 Requires:       ghc-prof = %{ghc_version}
 
 %description -n ghc-%{name}-prof
@@ -116,6 +116,9 @@ install -p -m 0644 -D man/%{name}.1 $RPM_BUILD_ROOT%{_mandir}/man1/%{name}.1
 install -p -m 0644 -D %SOURCE1 $RPM_BUILD_ROOT%{_datadir}/xsessions/%{name}.desktop
 install -p -m 0755 -D %SOURCE2 $RPM_BUILD_ROOT%{_bindir}/%{name}-start
 install -p -m 0644 -D man/xmonad.hs $RPM_BUILD_ROOT%{_sysconfdir}/skel/.%{name}/%{name}.hs
+
+rm $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/man/xmonad.hs
+
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -172,6 +175,12 @@ fi
 
 
 %changelog
+* Sun Nov 15 2009 Jens Petersen <petersen@redhat.com> - 0.9-1
+- update to 0.9 (requires ghc-X11 >= 1.4.6.1)
+- drop superfluous X11_version from ghc-X11 requires
+- rename X11_version to X11_minver
+- remove extra xmonad.hs under datadir
+
 * Thu Jul 30 2009 Yaakov M. Nemoy <ynemoy@fedoraproject.org> - 0.8.1-15
 - rebuild against newer packages from the mass rebuild
 
