@@ -8,7 +8,7 @@
 
 Name:           xmonad
 Version:        0.9
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -25,9 +25,11 @@ BuildRequires:  ghc, ghc-rpm-macros
 BuildRequires:  ghc-X11-devel >= %{X11_minver}
 %if %{with doc}
 BuildRequires:  ghc-doc
+BuildRequires:  ghc-X11-doc >= %{X11_minver}
 %endif
 %if %{with prof}
-BuildRequires:  ghc-prof, ghc-X11-prof >= %{X11_minver}
+BuildRequires:  ghc-prof
+BuildRequires:  ghc-X11-prof >= %{X11_minver}
 %endif
 Requires:       ghc-%{name}-devel = %{version}-%{release}
 # required until there is a command to open some system default
@@ -65,6 +67,7 @@ built for ghc-%{ghc_version}.
 %package -n ghc-%{name}-doc
 Summary:        Documentation for %{name}
 Group:          Development/Libraries
+Requires:       ghc-X11-doc
 Requires:       ghc-doc = %{ghc_version}
 Requires(post): ghc-doc = %{ghc_version}
 Requires(postun): ghc-doc = %{ghc_version}
@@ -175,6 +178,9 @@ fi
 
 
 %changelog
+* Sun Nov 15 2009 Jens Petersen <petersen@redhat.com> - 0.9-2
+- also buildrequires and requires ghc-X11-doc
+
 * Sun Nov 15 2009 Jens Petersen <petersen@redhat.com> - 0.9-1
 - update to 0.9 (requires ghc-X11 >= 1.4.6.1)
 - drop superfluous X11_version from ghc-X11 requires
