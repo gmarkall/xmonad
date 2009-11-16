@@ -8,7 +8,7 @@
 
 Name:           xmonad
 Version:        0.9
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -53,10 +53,10 @@ on several screens.
 %package -n ghc-%{name}-devel
 Summary:        Haskell %{name} library
 Group:          Development/Libraries
-Requires:       ghc-X11-devel
 Requires:       ghc = %{ghc_version}
 Requires(post): ghc = %{ghc_version}
 Requires(preun): ghc = %{ghc_version}
+Requires:       ghc-X11-devel = %ghc_pkg_ver X11
 
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library
@@ -67,10 +67,10 @@ built for ghc-%{ghc_version}.
 %package -n ghc-%{name}-doc
 Summary:        Documentation for %{name}
 Group:          Development/Libraries
-Requires:       ghc-X11-doc
 Requires:       ghc-doc = %{ghc_version}
 Requires(post): ghc-doc = %{ghc_version}
 Requires(postun): ghc-doc = %{ghc_version}
+Requires:       ghc-X11-doc = %ghc_pkg_ver X11
 
 %description -n ghc-%{name}-doc
 This package contains development documentation files for the %{name} library.
@@ -82,8 +82,8 @@ This package contains development documentation files for the %{name} library.
 Summary:        Profiling libraries for %{name}
 Group:          Development/Libraries
 Requires:       ghc-%{name}-devel = %{version}-%{release}
-Requires:       ghc-X11-prof
 Requires:       ghc-prof = %{ghc_version}
+Requires:       ghc-X11-prof = %ghc_pkg_ver X11
 
 %description -n ghc-%{name}-prof
 This package contains profiling libraries for %{name}.
@@ -178,6 +178,9 @@ fi
 
 
 %changelog
+* Tue Nov 17 2009 Jens Petersen <petersen@redhat.com> - 0.9-3
+- use %%ghc_pkg_ver for requires
+
 * Sun Nov 15 2009 Jens Petersen <petersen@redhat.com> - 0.9-2
 - also buildrequires and requires ghc-X11-doc
 
