@@ -8,7 +8,7 @@
 
 Name:           xmonad
 Version:        0.9
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -95,12 +95,6 @@ This package contains profiling libraries for %{name}.
 %patch0 -p1 -b .orig
 
 %build
-%ifarch ppc
-# hack around mysterious runghc fail
-%global cabal ./cabal
-ghc --make Setup -o cabal
-%endif
-
 %cabal_configure --ghc %{?with_prof:-p}
 %cabal build
 %if %{with doc}
@@ -178,6 +172,9 @@ fi
 
 
 %changelog
+* Tue Dec  8 2009 Jens Petersen <petersen@redhat.com> - 0.9-4
+- drop the ppc cabal workaround
+
 * Tue Nov 17 2009 Jens Petersen <petersen@redhat.com> - 0.9-3
 - use %%ghc_pkg_ver for requires
 
