@@ -1,14 +1,27 @@
-%global X11_minver 1.4.6.1
+%global pkg_name xmonad
 
-%bcond_without doc
-%bcond_without prof
+%global common_summary Haskell %{pkg_name} library
 
-# ghc does not emit debug information
+%global common_description xmonad is a tiling window manager for X. Windows are arranged\
+automatically to tile the screen without gaps or overlap, maximising\
+screen use. All features of the window manager are accessible from\
+the keyboard: a mouse is strictly optional. xmonad is written and\
+extensible in Haskell. Custom layout algorithms, and other\
+extensions, may be written by the user in config files. Layouts are\
+applied dynamically, and different layouts may be used on each\
+workspace. Xinerama is fully supported, allowing windows to be tiled\
+on several screens.
+
+%global ghc_pkg_deps ghc-mtl-devel, ghc-X11-devel
+
+%bcond_without shared
+
+# debuginfo is not useful for ghc
 %global debug_package %{nil}
 
-Name:           xmonad
-Version:        0.9
-Release:        4%{?dist}
+Name:           %{pkg_name}
+Version:        0.9.1
+Release:        1%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -18,19 +31,12 @@ Source0:        http://hackage.haskell.org/packages/archive/%{name}/%{version}/%
 Source1:        xmonad.desktop
 Source2:        xmonad-start
 Patch0:         xmonad-config-manpage.patch
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 # fedora ghc archs:
-ExclusiveArch: %{ix86} x86_64 ppc alpha
-BuildRequires:  ghc, ghc-rpm-macros
-BuildRequires:  ghc-X11-devel >= %{X11_minver}
-%if %{with doc}
+ExclusiveArch:  %{ix86} x86_64 ppc alpha
+BuildRequires:  ghc, ghc-rpm-macros >= 0.5.1
 BuildRequires:  ghc-doc
-BuildRequires:  ghc-X11-doc >= %{X11_minver}
-%endif
-%if %{with prof}
 BuildRequires:  ghc-prof
-BuildRequires:  ghc-X11-prof >= %{X11_minver}
-%endif
+%{?ghc_pkg_deps:BuildRequires:  %{ghc_pkg_deps}, %(echo %{ghc_pkg_deps} | sed -e "s/\(ghc-[^, ]\+\)-devel/\1-doc,\1-prof/g")}
 Requires:       ghc-%{name}-devel = %{version}-%{release}
 # required until there is a command to open some system default
 # xterminal
@@ -39,111 +45,7 @@ Requires:       xterm
 Requires:       xorg-x11-apps
 
 %description
-xmonad is a tiling window manager for X. Windows are arranged
-automatically to tile the screen without gaps or overlap, maximising
-screen use. All features of the window manager are accessible from
-the keyboard: a mouse is strictly optional. xmonad is written and
-extensible in Haskell. Custom layout algorithms, and other
-extensions, may be written by the user in config files. Layouts are
-applied dynamically, and different layouts may be used on each
-workspace. Xinerama is fully supported, allowing windows to be tiled
-on several screens.
-
-
-%package -n ghc-%{name}-devel
-Summary:        Haskell %{name} library
-Group:          Development/Libraries
-Requires:       ghc = %{ghc_version}
-Requires(post): ghc = %{ghc_version}
-Requires(preun): ghc = %{ghc_version}
-Requires:       ghc-X11-devel = %ghc_pkg_ver X11
-
-%description -n ghc-%{name}-devel
-This package provides the Haskell %{name} library
-built for ghc-%{ghc_version}.
-
-
-%if %{with doc}
-%package -n ghc-%{name}-doc
-Summary:        Documentation for %{name}
-Group:          Development/Libraries
-Requires:       ghc-doc = %{ghc_version}
-Requires(post): ghc-doc = %{ghc_version}
-Requires(postun): ghc-doc = %{ghc_version}
-Requires:       ghc-X11-doc = %ghc_pkg_ver X11
-
-%description -n ghc-%{name}-doc
-This package contains development documentation files for the %{name} library.
-%endif
-
-
-%if %{with prof}
-%package -n ghc-%{name}-prof
-Summary:        Profiling libraries for %{name}
-Group:          Development/Libraries
-Requires:       ghc-%{name}-devel = %{version}-%{release}
-Requires:       ghc-prof = %{ghc_version}
-Requires:       ghc-X11-prof = %ghc_pkg_ver X11
-
-%description -n ghc-%{name}-prof
-This package contains profiling libraries for %{name}.
-%endif
-
-
-%prep
-%setup -q
-%patch0 -p1 -b .orig
-
-%build
-%cabal_configure --ghc %{?with_prof:-p}
-%cabal build
-%if %{with doc}
-%cabal haddock
-%endif
-%ghc_gen_scripts
-
-
-%install
-rm -rf $RPM_BUILD_ROOT
-%cabal_install
-%ghc_install_scripts
-%ghc_gen_filelists ghc-%{name}
-
-install -p -m 0644 -D man/%{name}.1 $RPM_BUILD_ROOT%{_mandir}/man1/%{name}.1
-install -p -m 0644 -D %SOURCE1 $RPM_BUILD_ROOT%{_datadir}/xsessions/%{name}.desktop
-install -p -m 0755 -D %SOURCE2 $RPM_BUILD_ROOT%{_bindir}/%{name}-start
-install -p -m 0644 -D man/xmonad.hs $RPM_BUILD_ROOT%{_sysconfdir}/skel/.%{name}/%{name}.hs
-
-rm $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/man/xmonad.hs
-
-
-%clean
-rm -rf $RPM_BUILD_ROOT
-
-
-%post -n ghc-%{name}-devel
-%ghc_register_pkg
-
-
-%if %{with doc}
-%post -n ghc-%{name}-doc
-%ghc_reindex_haddock
-%endif
-
-
-%preun -n ghc-%{name}-devel
-if [ "$1" -eq 0 ] ; then
-  %ghc_unregister_pkg
-fi
-
-
-%if %{with doc}
-%postun -n ghc-%{name}-doc
-if [ "$1" -eq 0 ] ; then
-  %ghc_reindex_haddock
-fi
-%endif
-
+%{common_description}
 
 %files
 %defattr(-,root,root,-)
@@ -155,25 +57,51 @@ fi
 %{_sysconfdir}/skel/.%{name}/%{name}.hs
 
 
-%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
-%defattr(-,root,root,-)
+%ghc_binlib_package
 
 
-%if %{with doc}
-%files -n ghc-%{name}-doc -f ghc-%{name}-doc.files
-%defattr(-,root,root,-)
-%endif
+%prep
+%setup -q
+%patch0 -p1 -b .orig
+
+%build
+# dynamic + prof breaks cabal looking for p_dyn
+%cabal_configure --ghc -p
+%cabal build
+%cabal haddock
 
 
-%if %{with prof}
-%files -n ghc-%{name}-prof -f ghc-%{name}-prof.files
-%defattr(-,root,root,-)
-%endif
+%install
+%cabal_install
+%cabal_pkg_conf
+
+install -p -m 0644 -D man/%{name}.1 $RPM_BUILD_ROOT%{_mandir}/man1/%{name}.1
+install -p -m 0644 -D %SOURCE1 $RPM_BUILD_ROOT%{_datadir}/xsessions/%{name}.desktop
+install -p -m 0755 -D %SOURCE2 $RPM_BUILD_ROOT%{_bindir}/%{name}-start
+install -p -m 0644 -D man/xmonad.hs $RPM_BUILD_ROOT%{_sysconfdir}/skel/.%{name}/%{name}.hs
+
+rm $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/man/xmonad.hs
+
+%ghc_gen_filelists
+
+
+%clean
+rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Jan 11 2010 Jens Petersen <petersen@redhat.com> - 0.9.1-1
+- update to 0.9.1
+- update to ghc-rpm-macros-0.5.1 and cabal2spec-0.21.1:
+- drop doc and prof bcond
+- use common_summary and common_description
+- use ghc_name, ghc_binlib_package and ghc_pkg_deps
+- build shared library
+- drop X11_minver for now: it breaks macros
+- drop redundant buildroot and its install cleaning
+
 * Tue Dec  8 2009 Jens Petersen <petersen@redhat.com> - 0.9-4
-- drop the ppc cabal workaround
+- drop the ppc build cabal workaround
 
 * Tue Nov 17 2009 Jens Petersen <petersen@redhat.com> - 0.9-3
 - use %%ghc_pkg_ver for requires
