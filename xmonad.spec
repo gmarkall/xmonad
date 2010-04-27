@@ -21,7 +21,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.9.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -90,6 +90,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Apr 27 2010 Jens Petersen <petersen@redhat.com> - 0.9.1-3
+- rebuild against ghc-6.12.2
+
 * Wed Jan 13 2010 Jens Petersen <petersen@redhat.com> - 0.9.1-2
 - rebuild against ghc-mtl package
 
