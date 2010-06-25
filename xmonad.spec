@@ -21,21 +21,21 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.9.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
 License:        BSD
 URL:            http://hackage.haskell.org/cgi-bin/hackage-scripts/package/%{name}
 Source0:        http://hackage.haskell.org/packages/archive/%{name}/%{version}/%{name}-%{version}.tar.gz
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Source1:        xmonad.desktop
 Source2:        xmonad-start
 Patch0:         xmonad-config-manpage.patch
 # fedora ghc archs:
 ExclusiveArch:  %{ix86} x86_64 ppc alpha
-BuildRequires:  ghc, ghc-rpm-macros >= 0.5.1
-BuildRequires:  ghc-doc
-BuildRequires:  ghc-prof
+BuildRequires:  ghc, ghc-doc, ghc-prof
+BuildRequires:  ghc-rpm-macros >= 0.6.0
 %{?ghc_pkg_deps:BuildRequires:  %{ghc_pkg_deps}, %(echo %{ghc_pkg_deps} | sed -e "s/\(ghc-[^, ]\+\)-devel/\1-doc,\1-prof/g")}
 Requires:       ghc-%{name}-devel = %{version}-%{release}
 # required until there is a command to open some system default
@@ -47,17 +47,8 @@ Requires:       xorg-x11-apps
 %description
 %{common_description}
 
-%files
-%defattr(-,root,root,-)
-%doc CONFIG LICENSE README STYLE TODO man/%{name}.hs.orig
-%attr(755,root,root) %{_bindir}/%{name}
-%attr(755,root,root) %{_bindir}/%{name}-start
-%{_mandir}/man1/%{name}.1*
-%{_datadir}/xsessions/%{name}.desktop
-%{_sysconfdir}/skel/.%{name}/%{name}.hs
 
-
-%ghc_binlib_package
+%{?ghc_binlib_package}
 
 
 %prep
@@ -72,6 +63,7 @@ Requires:       xorg-x11-apps
 
 
 %install
+rm -rf $RPM_BUILD_ROOT
 %cabal_install
 %cabal_pkg_conf
 
@@ -83,13 +75,27 @@ install -p -m 0644 -D man/xmonad.hs $RPM_BUILD_ROOT%{_sysconfdir}/skel/.%{name}/
 rm $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/man/xmonad.hs
 
 %ghc_gen_filelists
+%ghc_strip_dynlinked
 
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 
+%files
+%defattr(-,root,root,-)
+%doc CONFIG LICENSE README STYLE TODO man/%{name}.hs.orig
+%attr(755,root,root) %{_bindir}/%{name}
+%attr(755,root,root) %{_bindir}/%{name}-start
+%{_mandir}/man1/%{name}.1*
+%{_datadir}/xsessions/%{name}.desktop
+%{_sysconfdir}/skel/.%{name}/%{name}.hs
+
+
 %changelog
+* Fri Jun 25 2010 Jens Petersen <petersen@redhat.com> - 0.9.1-4
+- strip dynamic files (cabal2spec-0.21.4)
+
 * Tue Apr 27 2010 Jens Petersen <petersen@redhat.com> - 0.9.1-3
 - rebuild against ghc-6.12.2
 
