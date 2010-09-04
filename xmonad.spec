@@ -15,13 +15,14 @@ on several screens.
 %global ghc_pkg_deps ghc-mtl-devel, ghc-X11-devel
 
 %bcond_without shared
+%bcond_without hscolour
 
 # debuginfo is not useful for ghc
 %global debug_package %{nil}
 
 Name:           %{pkg_name}
 Version:        0.9.1
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -35,7 +36,10 @@ Patch0:         xmonad-config-manpage.patch
 # fedora ghc archs:
 ExclusiveArch:  %{ix86} x86_64 ppc alpha
 BuildRequires:  ghc, ghc-doc, ghc-prof
-BuildRequires:  ghc-rpm-macros >= 0.6.0
+BuildRequires:  ghc-rpm-macros >= 0.8.1
+%if %{with hscolour}
+BuildRequires:  hscolour
+%endif
 %{?ghc_pkg_deps:BuildRequires:  %{ghc_pkg_deps}, %(echo %{ghc_pkg_deps} | sed -e "s/\(ghc-[^, ]\+\)-devel/\1-doc,\1-prof/g")}
 Requires:       ghc-%{name}-devel = %{version}-%{release}
 # required until there is a command to open some system default
@@ -48,24 +52,18 @@ Requires:       xorg-x11-apps
 %{common_description}
 
 
-%{?ghc_binlib_package}
-
-
 %prep
 %setup -q
 %patch0 -p1 -b .orig
 
+
 %build
-# dynamic + prof breaks cabal looking for p_dyn
-%cabal_configure --ghc -p
-%cabal build
-%cabal haddock
+%ghc_lib_build
 
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%cabal_install
-%cabal_pkg_conf
+%ghc_lib_install
 
 install -p -m 0644 -D man/%{name}.1 $RPM_BUILD_ROOT%{_mandir}/man1/%{name}.1
 install -p -m 0644 -D %SOURCE1 $RPM_BUILD_ROOT%{_datadir}/xsessions/%{name}.desktop
@@ -73,9 +71,6 @@ install -p -m 0755 -D %SOURCE2 $RPM_BUILD_ROOT%{_bindir}/%{name}-start
 install -p -m 0644 -D man/xmonad.hs $RPM_BUILD_ROOT%{_sysconfdir}/skel/.%{name}/%{name}.hs
 
 rm $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/man/xmonad.hs
-
-%ghc_gen_filelists
-%ghc_strip_dynlinked
 
 
 %clean
@@ -92,7 +87,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/skel/.%{name}/%{name}.hs
 
 
+%ghc_binlib_package -o 0.9.1-5
+
+
 %changelog
+* Sat Sep  4 2010 Jens Petersen <petersen@redhat.com> - 0.9.1-5
+- update to ghc-rpm-macros-0.8.1, hscolour and drop doc pkg (cabal2spec-0.22.2)
+
 * Fri Jun 25 2010 Jens Petersen <petersen@redhat.com> - 0.9.1-4
 - strip dynamic files (cabal2spec-0.21.4)
 
