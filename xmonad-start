@@ -1,8 +1,8 @@
 #!/bin/sh
 
+# display the manpage if there is no user configuration
 if [ ! -d ~/.xmonad ]; then
-  mkdir -p ~/.xmonad
-  cp /etc/skel/.xmonad/xmonad.hs ~/.xmonad/
+  xterm -e man xmonad
 fi
 
 exec xmonad

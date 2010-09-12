@@ -1,11 +1,11 @@
 [Desktop Entry]
+Type=Application
 Encoding=UTF-8
-Name=xmonad
-Comment=Tiling window manager
-Exec=xmonad-start
-Terminal=False
-TryExec=xmonad-start
-
-[Window Manager]
-SessionManaged=true
-# vi: encoding=utf-8
+Name=XMonad
+Exec=xmonad
+NoDisplay=true
+# name we put on the WM spec check window
+X-GNOME-WMName=Xmonad
+X-GNOME-Autostart-Phase=WindowManager
+X-GNOME-Provides=windowmanager
+X-GNOME-Autostart-Notify=true
