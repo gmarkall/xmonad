@@ -1,0 +1,48 @@
+= Configuration information =
+For information, examples, and documentation, please see:
+
+- man xmonad
+- "/usr/share/doc/xmonad-$version/xmonad.hs" (full default basic configuration)
+- Xmonad wiki: http://www.haskell.org/haskellwiki/Xmonad
+- http://hackage.haskell.org/packages/archive/xmonad-contrib/latest/doc/html/XMonad-Doc.html
+  (detailed configuration information and examples)
+- http://xmonad.org/ website
+
+For extensions, including Desktop support, you need to install
+ghc-xmonad-contrib-devel.
+
+== Desktop support ==
+xmonad does not work well with modern desktop environments out of the box.
+Example xmonad configurations for use with a desktop:
+
+=== Generic EWMH Desktop support ===
+
+$ cat > xmonad.hs <<EOF
+import XMonad
+import XMonad.Config.Desktop
+
+main = xmonad $ desktopConfig
+EOF
+$ mkdir -p ~/.xmonad/
+$ cp -i xmonad.hs ~/.xmonad/
+
+Then (re)start xmonad and it will compile and run the configuration.
+
+=== GNOME ===
+Modify above file:
+
+$ sed -i -e s/Config.Desktop/Config.Gnome/ -e s/desktopConfig/gnomeConfig/ ~/.xmonad/xmonad.hs
+
+Set xmonad as default window manager:
+
+$ gconftool-2 -s /desktop/gnome/session/required_components/windowmanager xmonad --type string
+
+=== KDE ===
+Modify above file:
+
+$ sed -i -e s/Config.Desktop/Config.Kde/ -e s/desktopConfig/kdeConfig/ ~/.xmonad/xmonad.hs
+
+=== Xfce ===
+Modify above file:
+
+$ sed -i -e s/Config.Desktop/Config.Xfce/ -e s/desktopConfig/xfceConfig/ ~/.xmonad/xmonad.hs
