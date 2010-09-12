@@ -40,7 +40,7 @@ $ gconftool-2 -s /desktop/gnome/session/required_components/windowmanager xmonad
 === KDE ===
 Modify above file:
 
-$ sed -i -e s/Config.Desktop/Config.Kde/ -e s/desktopConfig/kdeConfig/ ~/.xmonad/xmonad.hs
+$ sed -i -e s/Config.Desktop/Config.Kde/ -e s/desktopConfig/kde4Config/ ~/.xmonad/xmonad.hs
 
 === Xfce ===
 Modify above file:
