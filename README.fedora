@@ -1,7 +1,8 @@
-For information, examples, and documentation, please read:
-
-- man xmonad
-- "/usr/share/doc/xmonad-$version/xmonad.hs" (full default basic configuration)
+For documentation and examples see:
+- xmonad manpage
+- /usr/share/doc/xmonad-$version/xmonad.hs (full default basic configuration)
+- /usr/share/doc/ghc/html/libraries/xmonad-contrib-$version/index.html
+and online:
 - Xmonad wiki: http://www.haskell.org/haskellwiki/Xmonad
 - http://hackage.haskell.org/packages/archive/xmonad-contrib/latest/doc/html/XMonad-Doc.html
   (detailed configuration information and examples)
@@ -12,9 +13,10 @@ you need to install ghc-xmonad-contrib-devel.
 
 = EWMH Desktop support =
 xmonad does not work well with desktop environment panels out of the box.
-
-See http://haskell.org/haskellwiki/Xmonad/Basic_Desktop_Environment_Integration
-or the ghc-xmonad-contrib documentation for how to setup desktop support.
+See:
+- /usr/share/doc/ghc/html/libraries/xmonad-contrib-$version/XMonad-Config-Desktop.html
+- http://haskell.org/haskellwiki/Xmonad/Basic_Desktop_Environment_Integration
+for how to setup desktop support.
 
 == GNOME ==
 You can override xmonad as your GNOME default window manager with:
@@ -23,4 +25,5 @@ $ gconftool-2 -s /desktop/gnome/session/required_components/windowmanager xmonad
 
 = Bluetile =
 New users may find the Bluetile window manager built
-on top of xmonad-contrib a gentler introduction to xmonad.
+on top of xmonad-contrib a gentler introduction to xmonad
+and tiling.

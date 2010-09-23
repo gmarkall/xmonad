@@ -22,7 +22,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.9.1
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -93,6 +93,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Sep 23 2010 Jens Petersen <petersen@redhat.com> - 0.9.1-7
+- xmonad-start should run xterm in background
+- improve README.fedora more
+
 * Sun Sep 12 2010 Jens Petersen <petersen@redhat.com> - 0.9.1-6
 - add application desktop file for gnome-session to find xmonad
   so setting /desktop/gnome/session/required_components/windowmanager now works
