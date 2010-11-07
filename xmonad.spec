@@ -1,6 +1,6 @@
 %global pkg_name xmonad
 
-%global common_summary Haskell %{pkg_name} library
+%global common_summary A tiling window manager
 
 %global common_description xmonad is a tiling window manager for X. Windows are arranged\
 automatically to tile the screen without gaps or overlap, maximising\
@@ -22,7 +22,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.9.1
-Release:        8%{?dist}
+Release:        9%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -93,6 +93,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Nov 07 2010 Ben Boeckel <mathstuf@gmail.com> - 0.9.1-9
+- Rebuild
+
 * Wed Sep 29 2010 jkeating - 0.9.1-8
 - Rebuilt for gcc bug 634757
 
