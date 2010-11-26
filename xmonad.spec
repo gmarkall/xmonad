@@ -22,12 +22,12 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.9.1
-Release:        9%{?dist}
+Release:        10%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
 License:        BSD
-URL:            http://hackage.haskell.org/cgi-bin/hackage-scripts/package/%{name}
+URL:            http://hackage.haskell.org/package/%{name}
 Source0:        http://hackage.haskell.org/packages/archive/%{name}/%{version}/%{name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Source1:        xmonad-session.desktop
@@ -89,10 +89,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/xsessions/%{name}.desktop
 
 
-%ghc_binlib_package -o 0.9.1-5
+%ghc_binlib_package
 
 
 %changelog
+* Fri Nov 26 2010 Jens Petersen <petersen@redhat.com> - 0.9.1-10
+- update url and drop -o obsoletes
+
 * Sun Nov 07 2010 Ben Boeckel <mathstuf@gmail.com> - 0.9.1-9
 - Rebuild
 
