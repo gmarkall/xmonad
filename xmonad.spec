@@ -35,6 +35,7 @@ Source2:        xmonad-start
 Source3:        xmonad.desktop
 Source4:        README.fedora
 Patch1:         xmonad-dynamic-link.patch
+Patch2:         xmonad-0.9.1-ghc7-base4.patch
 # fedora ghc archs:
 ExclusiveArch:  %{ix86} x86_64 ppc alpha
 BuildRequires:  ghc, ghc-doc, ghc-prof
@@ -56,6 +57,7 @@ Requires:       xorg-x11-apps
 %prep
 %setup -q
 %patch1 -p1 -b .orig
+%patch2 -p1 -b .base3
 cp -p %SOURCE4 .
 
 
@@ -94,6 +96,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %changelog
 * Fri Nov 26 2010 Jens Petersen <petersen@redhat.com> - 0.9.1-10
+- backport exceptions changes from upstream darcs for ghc7 base4
 - update url and drop -o obsoletes
 
 * Sun Nov 07 2010 Ben Boeckel <mathstuf@gmail.com> - 0.9.1-9
