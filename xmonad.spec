@@ -22,7 +22,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.9.1
-Release:        10%{?dist}
+Release:        11%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -95,6 +95,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Dec  5 2010 Jens Petersen <petersen@redhat.com> - 0.9.1-11
+- rebuild
+
 * Fri Nov 26 2010 Jens Petersen <petersen@redhat.com> - 0.9.1-10
 - backport exceptions changes from upstream darcs for ghc7 base4
 - update url and drop -o obsoletes
