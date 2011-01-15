@@ -14,22 +14,18 @@ on several screens.
 
 %global ghc_pkg_deps ghc-mtl-devel, ghc-X11-devel
 
-%bcond_without shared
-%bcond_without hscolour
-
 # debuginfo is not useful for ghc
 %global debug_package %{nil}
 
 Name:           %{pkg_name}
 Version:        0.9.1
-Release:        11%{?dist}
+Release:        12%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
 License:        BSD
 URL:            http://hackage.haskell.org/package/%{name}
 Source0:        http://hackage.haskell.org/packages/archive/%{name}/%{version}/%{name}-%{version}.tar.gz
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Source1:        xmonad-session.desktop
 Source2:        xmonad-start
 Source3:        xmonad.desktop
@@ -39,10 +35,8 @@ Patch2:         xmonad-0.9.1-ghc7-base4.patch
 # fedora ghc archs:
 ExclusiveArch:  %{ix86} x86_64 ppc alpha
 BuildRequires:  ghc, ghc-doc, ghc-prof
-BuildRequires:  ghc-rpm-macros >= 0.8.1
-%if %{with hscolour}
+BuildRequires:  ghc-rpm-macros >= 0.7.3
 BuildRequires:  hscolour
-%endif
 %{?ghc_pkg_deps:BuildRequires:  %{ghc_pkg_deps}, %(echo %{ghc_pkg_deps} | sed -e "s/\(ghc-[^, ]\+\)-devel/\1-doc,\1-prof/g")}
 Requires:       ghc-%{name}-devel = %{version}-%{release}
 # required until there is a command to open a system-default xterminal
@@ -66,19 +60,14 @@ cp -p %SOURCE4 .
 
 
 %install
-rm -rf $RPM_BUILD_ROOT
 %ghc_lib_install
 
-install -p -m 0644 -D man/%{name}.1 $RPM_BUILD_ROOT%{_mandir}/man1/%{name}.1
-install -p -m 0644 -D %SOURCE1 $RPM_BUILD_ROOT%{_datadir}/xsessions/%{name}.desktop
-install -p -m 0755 -D %SOURCE2 $RPM_BUILD_ROOT%{_bindir}/%{name}-start
-install -p -m 0644 -D %SOURCE3 $RPM_BUILD_ROOT%{_datadir}/applications/%{name}.desktop
+install -p -m 0644 -D man/%{name}.1 %{buildroot}%{_mandir}/man1/%{name}.1
+install -p -m 0644 -D %SOURCE1 %{buildroot}%{_datadir}/xsessions/%{name}.desktop
+install -p -m 0755 -D %SOURCE2 %{buildroot}%{_bindir}/%{name}-start
+install -p -m 0644 -D %SOURCE3 %{buildroot}%{_datadir}/applications/%{name}.desktop
 
-rm $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/man/xmonad.hs
-
-
-%clean
-rm -rf $RPM_BUILD_ROOT
+rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 
 
 %files
@@ -95,6 +84,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Jan 15 2011 Ben Boeckel <mathstuf@gmail.com> - 0.9.1-12
+- Update to cabal2spec-0.22.4
+- Rebuild
+- Use %%{buildroot}
+
 * Sun Dec  5 2010 Jens Petersen <petersen@redhat.com> - 0.9.1-11
 - rebuild
 
