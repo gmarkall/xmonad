@@ -18,8 +18,8 @@ on several screens.
 %global debug_package %{nil}
 
 Name:           %{pkg_name}
-Version:        0.9.1
-Release:        12%{?dist}
+Version:        0.9.2
+Release:        1%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -31,7 +31,6 @@ Source2:        xmonad-start
 Source3:        xmonad.desktop
 Source4:        README.fedora
 Patch1:         xmonad-dynamic-link.patch
-Patch2:         xmonad-0.9.1-ghc7-base4.patch
 # fedora ghc archs:
 ExclusiveArch:  %{ix86} x86_64 ppc alpha
 BuildRequires:  ghc, ghc-doc, ghc-prof
@@ -51,7 +50,6 @@ Requires:       xorg-x11-apps
 %prep
 %setup -q
 %patch1 -p1 -b .orig
-%patch2 -p1 -b .base3
 cp -p %SOURCE4 .
 
 
@@ -84,6 +82,9 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 
 
 %changelog
+* Sat Jan 15 2011 Ben Boeckel <mathstuf@gmail.com> - 0.9.2-1
+- Update to 0.9.2
+
 * Sat Jan 15 2011 Ben Boeckel <mathstuf@gmail.com> - 0.9.1-12
 - Update to cabal2spec-0.22.4
 - Rebuild
