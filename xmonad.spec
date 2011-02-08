@@ -19,7 +19,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.9.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -82,6 +82,9 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 
 
 %changelog
+* Mon Feb 07 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.9.2-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
+
 * Sat Jan 15 2011 Ben Boeckel <mathstuf@gmail.com> - 0.9.2-1
 - Update to 0.9.2
 
