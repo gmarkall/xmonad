@@ -19,7 +19,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.9.2
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -32,7 +32,7 @@ Source3:        xmonad.desktop
 Source4:        README.fedora
 Patch1:         xmonad-dynamic-link.patch
 # fedora ghc archs:
-ExclusiveArch:  %{ix86} x86_64 ppc alpha
+ExclusiveArch:  %{ix86} x86_64 ppc alpha sparcv9
 BuildRequires:  ghc, ghc-doc, ghc-prof
 BuildRequires:  ghc-rpm-macros >= 0.7.3
 BuildRequires:  hscolour
@@ -82,6 +82,9 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 
 
 %changelog
+* Thu Mar 10 2011 Fabio M. Di Nitto <fdinitto@redhat.com> - 0.9.2-3
+- Enable build on sparcv9
+
 * Mon Feb 07 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.9.2-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
 
