@@ -1,5 +1,7 @@
 %global pkg_name xmonad
 
+%global without_haddock 1
+
 %global common_summary A tiling window manager
 
 %global common_description xmonad is a tiling window manager for X. Windows are arranged\
@@ -19,7 +21,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.9.2
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -82,6 +84,9 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 
 
 %changelog
+* Fri Mar 11 2011 Jens Petersen <petersen@redhat.com> - 0.9.2-4
+- disable hscolour for now to build
+
 * Thu Mar 10 2011 Fabio M. Di Nitto <fdinitto@redhat.com> - 0.9.2-3
 - Enable build on sparcv9
 
