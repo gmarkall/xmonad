@@ -1,6 +1,6 @@
 %global pkg_name xmonad
 
-%global without_haddock 1
+%global without_hscolour 1
 
 %global common_summary A tiling window manager
 
@@ -21,7 +21,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.9.2
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -65,7 +65,7 @@ cp -p %SOURCE4 .
 install -p -m 0644 -D man/%{name}.1 %{buildroot}%{_mandir}/man1/%{name}.1
 install -p -m 0644 -D %SOURCE1 %{buildroot}%{_datadir}/xsessions/%{name}.desktop
 install -p -m 0755 -D %SOURCE2 %{buildroot}%{_bindir}/%{name}-start
-install -p -m 0644 -D %SOURCE3 %{buildroot}%{_datadir}/applications/%{name}.desktop
+desktop-file-install --dir=${RPM_BUILD_ROOT}%{_datadir}/applications %{SOURCE3}
 
 rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 
@@ -84,6 +84,10 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 
 
 %changelog
+* Fri Apr  1 2011 Jens Petersen <petersen@redhat.com> - 0.9.2-5
+- use desktop-file-install to install xmonad.desktop correctly
+- really disable hscolour not haddock
+
 * Fri Mar 11 2011 Jens Petersen <petersen@redhat.com> - 0.9.2-4
 - disable hscolour for now to build
 
