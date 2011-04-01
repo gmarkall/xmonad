@@ -87,6 +87,7 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 * Fri Apr  1 2011 Jens Petersen <petersen@redhat.com> - 0.9.2-5
 - use desktop-file-install to install xmonad.desktop correctly
 - really disable hscolour not haddock
+- update the desktop files for desktop-file-validate
 
 * Fri Mar 11 2011 Jens Petersen <petersen@redhat.com> - 0.9.2-4
 - disable hscolour for now to build

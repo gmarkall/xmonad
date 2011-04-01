@@ -1,11 +1,11 @@
 [Desktop Entry]
-Encoding=UTF-8
 Name=xmonad
 Comment=Tiling window manager
 Exec=xmonad-start
-Terminal=False
+Terminal=false
 TryExec=xmonad-start
 
 [Window Manager]
 SessionManaged=true
+
 # vi: encoding=utf-8

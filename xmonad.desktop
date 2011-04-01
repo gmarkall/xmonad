@@ -1,6 +1,5 @@
 [Desktop Entry]
 Type=Application
-Encoding=UTF-8
 Name=XMonad
 Exec=xmonad
 NoDisplay=true
