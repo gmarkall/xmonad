@@ -1,3 +1,7 @@
+To start xmonad from gdm, just select "xmonad" or "xmonad GNOME"
+from the GDM session menu.
+
+= How to configure =
 For documentation and examples see:
 - xmonad manpage
 - /usr/share/doc/xmonad-$version/xmonad.hs (full default basic configuration)
@@ -8,20 +12,15 @@ and online:
   (detailed configuration information and examples)
 - http://xmonad.org/ website
 
-To make use of extensions, including adding Desktop support,
-you need first to install ghc-xmonad-contrib-devel.
+To make use of extensions and Desktop Environment support,
+you need to install ghc-xmonad-contrib-devel.
 
 = EWMH Desktop support =
 xmonad does not work well with desktop environment panels out of the box.
 See:
-- /usr/share/doc/ghc/html/libraries/xmonad-contrib-$version/XMonad-Config-Desktop.html
+- http://hackage.haskell.org/packages/archive/xmonad-contrib/latest/doc/html/XMonad-Config-Desktop.html
 - http://haskell.org/haskellwiki/Xmonad/Basic_Desktop_Environment_Integration
 for how to setup desktop support.
-
-== GNOME ==
-Then you can override xmonad as your GNOME default window manager with:
-
-$ gsettings set org.gnome.desktop.session session-name xmonad
 
 = Bluetile =
 New users may find the Bluetile window manager built
