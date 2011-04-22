@@ -32,12 +32,15 @@ Source1:        xmonad-session.desktop
 Source2:        xmonad-start
 Source3:        xmonad.desktop
 Source4:        README.fedora
+Source5:        xmonad-gnome-session.desktop
+Source6:        xmonad.session
 Patch1:         xmonad-dynamic-link.patch
 # fedora ghc archs:
 ExclusiveArch:  %{ix86} x86_64 ppc alpha sparcv9 ppc64
 BuildRequires:  ghc, ghc-doc, ghc-prof
 BuildRequires:  ghc-rpm-macros >= 0.7.3
 BuildRequires:  hscolour
+BuildRequires:  desktop-file-utils
 %{?ghc_pkg_deps:BuildRequires:  %{ghc_pkg_deps}, %(echo %{ghc_pkg_deps} | sed -e "s/\(ghc-[^, ]\+\)-devel/\1-doc,\1-prof/g")}
 # required until there is a command to open a system-default xterminal
 Requires:       xterm
@@ -67,6 +70,8 @@ install -p -m 0644 -D man/%{name}.1 %{buildroot}%{_mandir}/man1/%{name}.1
 install -p -m 0644 -D %SOURCE1 %{buildroot}%{_datadir}/xsessions/%{name}.desktop
 install -p -m 0755 -D %SOURCE2 %{buildroot}%{_bindir}/%{name}-start
 desktop-file-install --dir=${RPM_BUILD_ROOT}%{_datadir}/applications %{SOURCE3}
+install -p -m 0644 -D %SOURCE5 %{buildroot}%{_datadir}/xsessions/%{name}-gnome.desktop
+install -p -m 0644 -D %SOURCE6 %{buildroot}%{_datadir}/gnome-session/sessions/%{name}.session
 
 rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 
@@ -78,7 +83,8 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 %attr(755,root,root) %{_bindir}/%{name}-start
 %{_mandir}/man1/%{name}.1*
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/xsessions/%{name}.desktop
+%{_datadir}/xsessions/%{name}*.desktop
+%{_datadir}/gnome-session/sessions/%{name}.session
 
 
 %ghc_binlib_package
@@ -89,6 +95,9 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 - drop explicit requires on ghc-xmonad-devel for lighter installs
 - update readme to mention gsettings for gnome3
 - enable ppc64 build
+- buildrequires desktop-file-utils
+- add an xsession file for a gnome-session too
+- add a gnome-session-3 .session file
 
 * Fri Apr  1 2011 Jens Petersen <petersen@redhat.com> - 0.9.2-5
 - use desktop-file-install to install xmonad.desktop correctly
