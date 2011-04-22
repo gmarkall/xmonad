@@ -9,7 +9,7 @@ and online:
 - http://xmonad.org/ website
 
 To make use of extensions, including adding Desktop support,
-you need to install ghc-xmonad-contrib-devel.
+you need first to install ghc-xmonad-contrib-devel.
 
 = EWMH Desktop support =
 xmonad does not work well with desktop environment panels out of the box.
@@ -19,9 +19,9 @@ See:
 for how to setup desktop support.
 
 == GNOME ==
-You can override xmonad as your GNOME default window manager with:
+Then you can override xmonad as your GNOME default window manager with:
 
-$ gconftool-2 -s /desktop/gnome/session/required_components/windowmanager xmonad --type string
+$ gsettings set org.gnome.desktop.session session-name xmonad
 
 = Bluetile =
 New users may find the Bluetile window manager built

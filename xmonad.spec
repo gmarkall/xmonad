@@ -1,6 +1,6 @@
 %global pkg_name xmonad
 
-%global without_hscolour 1
+%global without_haddock 1
 
 %global common_summary A tiling window manager
 
@@ -21,7 +21,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.9.2
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -34,12 +34,11 @@ Source3:        xmonad.desktop
 Source4:        README.fedora
 Patch1:         xmonad-dynamic-link.patch
 # fedora ghc archs:
-ExclusiveArch:  %{ix86} x86_64 ppc alpha sparcv9
+ExclusiveArch:  %{ix86} x86_64 ppc alpha sparcv9 ppc64
 BuildRequires:  ghc, ghc-doc, ghc-prof
 BuildRequires:  ghc-rpm-macros >= 0.7.3
 BuildRequires:  hscolour
 %{?ghc_pkg_deps:BuildRequires:  %{ghc_pkg_deps}, %(echo %{ghc_pkg_deps} | sed -e "s/\(ghc-[^, ]\+\)-devel/\1-doc,\1-prof/g")}
-Requires:       ghc-%{name}-devel = %{version}-%{release}
 # required until there is a command to open a system-default xterminal
 Requires:       xterm
 # for xmessage
@@ -48,6 +47,8 @@ Requires:       xorg-x11-apps
 %description
 %{common_description}
 
+In order to configure and customize xmonad, ghc-xmonad-devel
+and optionally ghc-xmonad-contrib-devel need to be installed.
 
 %prep
 %setup -q
@@ -84,13 +85,17 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 
 
 %changelog
+* Fri Apr 22 2011 Jens Petersen <petersen@redhat.com> - 0.9.2-6
+- drop explicit requires on ghc-xmonad-devel for lighter installs
+- update readme to mention gsettings for gnome3
+- enable ppc64 build
+
 * Fri Apr  1 2011 Jens Petersen <petersen@redhat.com> - 0.9.2-5
 - use desktop-file-install to install xmonad.desktop correctly
-- really disable hscolour not haddock
 - update the desktop files for desktop-file-validate
 
 * Fri Mar 11 2011 Jens Petersen <petersen@redhat.com> - 0.9.2-4
-- disable hscolour for now to build
+- disable haddock for now to build
 
 * Thu Mar 10 2011 Fabio M. Di Nitto <fdinitto@redhat.com> - 0.9.2-3
 - Enable build on sparcv9
