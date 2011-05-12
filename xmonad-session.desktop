@@ -3,7 +3,6 @@ Name=xmonad
 Comment=Tiling window manager
 Exec=xmonad-start
 Terminal=false
-TryExec=xmonad-start
 
 [Window Manager]
 SessionManaged=true

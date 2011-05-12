@@ -14,14 +14,9 @@ applied dynamically, and different layouts may be used on each\
 workspace. Xinerama is fully supported, allowing windows to be tiled\
 on several screens.
 
-%global ghc_pkg_deps ghc-mtl-devel, ghc-X11-devel
-
-# debuginfo is not useful for ghc
-%global debug_package %{nil}
-
 Name:           %{pkg_name}
 Version:        0.9.2
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -37,11 +32,11 @@ Source6:        xmonad.session
 Patch1:         xmonad-dynamic-link.patch
 # fedora ghc archs:
 ExclusiveArch:  %{ix86} x86_64 ppc alpha sparcv9 ppc64
-BuildRequires:  ghc, ghc-doc, ghc-prof
-BuildRequires:  ghc-rpm-macros >= 0.7.3
+BuildRequires:  ghc-prof
+BuildRequires:  ghc-rpm-macros
 BuildRequires:  hscolour
 BuildRequires:  desktop-file-utils
-%{?ghc_pkg_deps:BuildRequires:  %{ghc_pkg_deps}, %(echo %{ghc_pkg_deps} | sed -e "s/\(ghc-[^, ]\+\)-devel/\1-doc,\1-prof/g")}
+BuildRequires:  ghc-mtl-prof, ghc-X11-prof
 # required until there is a command to open a system-default xterminal
 Requires:       xterm
 # for xmessage
@@ -91,6 +86,12 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 
 
 %changelog
+* Wed May 11 2011 Jens Petersen <petersen@redhat.com> - 0.9.2-7
+- xmonad-start no longer execs xmonad not to confuse gnome-session
+- xmonad-start now tries to setup a new xmonad.hs for GNOME desktop
+  if running a xmonad-gnome session with xmonad-contrib installed
+- improvements to README.fedora
+
 * Fri Apr 22 2011 Jens Petersen <petersen@redhat.com> - 0.9.2-6
 - drop explicit requires on ghc-xmonad-devel for lighter installs
 - update readme to mention gsettings for gnome3

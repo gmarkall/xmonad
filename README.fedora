@@ -1,9 +1,42 @@
-To start xmonad from gdm, just select "xmonad" or "xmonad GNOME"
-from the GDM session menu.
+= From GDM =
+xmonad can be started from GDM, by selecting "xmonad" or "xmonad GNOME"
+from the session menu.
+
+= xmonad-start =
+By default at startup Fedora's xmonad-start displays
+"man xmonad" in an xterm to help newcomers and to encourage
+configuring xmonad by creating "~/.xmonad/xmonad.hs".
+
+To stop this behaviour, just create "~/.xmonad/".
+
+== Simple Desktop configuration ==
+The default xmonad configuration does not work well with desktop environments.
+
+The following basic generic configuration requires ghc-xmonad-contrib-devel
+to be installed, and should get it working:
+
+$ mkdir ~/.xmonad
+$ cat > ~/.xmonad/xmonad.hs << EOF
+import XMonad
+import XMonad.Config.Desktop
+
+main = xmonad desktopConfig
+EOF
+$ 
+
+You can replace the generic "[Dd]esktop" by:
+- "[Gg]nome" for better GNOME support
+- "[Kk]de[4]" for KDE support
+- "[Xx]fce" for XFCE support.
+
+See:
+- http://hackage.haskell.org/packages/archive/xmonad-contrib/latest/doc/html/XMonad-Config-Desktop.html
+- http://haskell.org/haskellwiki/Xmonad/Basic_Desktop_Environment_Integration
+for more info on how to setup desktop support.
 
 = How to configure =
 For documentation and examples see:
-- xmonad manpage
+- xmonad man-page
 - /usr/share/doc/xmonad-$version/xmonad.hs (full default basic configuration)
 - /usr/share/doc/ghc/html/libraries/xmonad-contrib-$version/index.html
 and online:
@@ -15,14 +48,6 @@ and online:
 To make use of extensions and Desktop Environment support,
 you need to install ghc-xmonad-contrib-devel.
 
-= EWMH Desktop support =
-xmonad does not work well with desktop environment panels out of the box.
-See:
-- http://hackage.haskell.org/packages/archive/xmonad-contrib/latest/doc/html/XMonad-Config-Desktop.html
-- http://haskell.org/haskellwiki/Xmonad/Basic_Desktop_Environment_Integration
-for how to setup desktop support.
-
 = Bluetile =
-New users may find the Bluetile window manager built
-on top of xmonad-contrib a gentler introduction to xmonad
-and tiling.
+New users may find the Bluetile window manager built on top of
+xmonad-contrib a gentler introduction to xmonad and tiling.
