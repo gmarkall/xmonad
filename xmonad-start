@@ -1,9 +1,11 @@
 #!/bin/sh
 
+#  if no user configuration
 if [ ! -d ~/.xmonad ]; then
-    # display the manpage if there is no user configuration
-    xterm -e man xmonad &
-    xterm -e less /usr/share/doc/xmonad*/README.fedora &
+    # display the manpage
+    xterm -e "man xmonad" &
+    # and the README
+    xterm -e "less /usr/share/doc/xmonad*/README.fedora" &
 
     # try to configure for a gnome session
     if [ "$DESKTOP_SESSION" = "xmonad-gnome" ]; then
@@ -19,6 +21,10 @@ EOF
 	    echo "xmonad-start: install ghc-xmonad-contrib-devel for GNOME support"
 	fi
     fi
+fi
+
+if [ -r ~/.xmonad/session ]; then
+    sh ~/.xmonad/session
 fi
 
 xmonad

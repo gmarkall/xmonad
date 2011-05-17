@@ -1,15 +1,24 @@
-= From GDM =
-xmonad can be started from GDM, by selecting "xmonad" or "xmonad GNOME"
-from the session menu.
+= Packaging =
+xmonad in Fedora is provided by 3 packages:
+
+- xmonad-core: just the base window manager and X session files
+- xmonad: additionally installs devel library files needed for configuration
+- xmonad: additionally included a gnome session file and requires gnome-session and gnome-terminal
+
+= Starting from GDM =
+xmonad can be started from GDM by selecting "xmonad" in the session menu.
+
+For GNOME support please install xmonad-gnome
+and select "xmonad GNOME" in GDM's session menu, which will run
+"gnome-session --session=xmonad".
 
 = xmonad-start =
 By default at startup Fedora's xmonad-start displays
-"man xmonad" in an xterm to help newcomers and to encourage
-configuring xmonad by creating "~/.xmonad/xmonad.hs".
+"man xmonad" in an xterm to help newcomers.
 
 To stop this behaviour, just create "~/.xmonad/".
 
-== Simple Desktop configuration ==
+== Basic configuration for Desktop Environments ==
 The default xmonad configuration does not work well with desktop environments.
 
 The following basic generic configuration requires ghc-xmonad-contrib-devel
@@ -34,7 +43,7 @@ See:
 - http://haskell.org/haskellwiki/Xmonad/Basic_Desktop_Environment_Integration
 for more info on how to setup desktop support.
 
-= How to configure =
+= Detailed configuration =
 For documentation and examples see:
 - xmonad man-page
 - /usr/share/doc/xmonad-$version/xmonad.hs (full default basic configuration)

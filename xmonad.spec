@@ -2,7 +2,7 @@
 
 %global without_haddock 1
 
-%global common_summary A tiling window manager
+%global common_summary xmonad tiling window manager
 
 %global common_description xmonad is a tiling window manager for X. Windows are arranged\
 automatically to tile the screen without gaps or overlap, maximising\
@@ -16,7 +16,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.9.2
-Release:        7%{?dist}
+Release:        8%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -37,16 +37,43 @@ BuildRequires:  ghc-rpm-macros
 BuildRequires:  hscolour
 BuildRequires:  desktop-file-utils
 BuildRequires:  ghc-mtl-prof, ghc-X11-prof
-# required until there is a command to open a system-default xterminal
-Requires:       xterm
-# for xmessage
-Requires:       xorg-x11-apps
+Requires:       %{pkg_name}-core = %{version}-%{release}
+Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
+Requires:       ghc-xmonad-contrib-devel
 
 %description
 %{common_description}
 
-In order to configure and customize xmonad, ghc-xmonad-devel
-and optionally ghc-xmonad-contrib-devel need to be installed.
+This is a meta-package that installs xmonad-core and ghc-xmonad-contrib-devel,
+allowing xmonad to be configured with "~/.xmonad/xmonad.hs".
+
+
+%package core
+Summary:        A tiling window manager
+# required until there is a command to open a system-default xterminal
+Requires:       xterm
+# for xmessage
+Requires:       xorg-x11-apps
+# prevent doc file conflicts with ghc-xmonad
+Requires:       ghc-%{pkg_name} = %{version}-%{release}
+
+%description core
+This package contains the core xmonad window manager.
+
+If you want to configure xmonad please also install either xmonad or xmonad-gnome.
+
+
+%package gnome
+Summary:        xmonad GNOME session
+Requires:       xmonad-core = %{version}-%{release}
+Requires:       ghc-xmonad-contrib-devel
+Requires:       gnome-session, gnome-terminal
+
+%description gnome
+This package adds a "xmonad-gnome" X session configuration
+so that xmonad can be started easily from GDM to run
+in a GNOME session.
+
 
 %prep
 %setup -q
@@ -73,12 +100,21 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 
 %files
 %defattr(-,root,root,-)
+
+
+%files core
+%defattr(-,root,root,-)
 %doc CONFIG LICENSE README man/%{name}.hs README.fedora
 %attr(755,root,root) %{_bindir}/%{name}
 %attr(755,root,root) %{_bindir}/%{name}-start
 %{_mandir}/man1/%{name}.1*
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/xsessions/%{name}*.desktop
+%{_datadir}/xsessions/%{name}.desktop
+
+
+%files gnome
+%defattr(-,root,root,-)
+%{_datadir}/xsessions/%{name}-gnome.desktop
 %{_datadir}/gnome-session/sessions/%{name}.session
 
 
@@ -86,6 +122,13 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 
 
 %changelog
+* Fri May 13 2011 Jens Petersen <petersen@redhat.com> - 0.9.2-8
+- add a core subpackage and let the base package can pull in ghc-xmonad*-devel
+- add a gnome subpackage for the gnome session
+- more README.fedore improvements
+- xmonad-start: quote the xterm commands and support ~/.xmonad/session
+- fix doc files conflicts by having xmonad-core require ghc-xmonad
+
 * Wed May 11 2011 Jens Petersen <petersen@redhat.com> - 0.9.2-7
 - xmonad-start no longer execs xmonad not to confuse gnome-session
 - xmonad-start now tries to setup a new xmonad.hs for GNOME desktop
