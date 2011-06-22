@@ -16,7 +16,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.9.2
-Release:        8%{?dist}
+Release:        9%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -30,9 +30,8 @@ Source4:        README.fedora
 Source5:        xmonad-gnome-session.desktop
 Source6:        xmonad.session
 Patch1:         xmonad-dynamic-link.patch
-# fedora ghc archs:
-ExclusiveArch:  %{ix86} x86_64 ppc alpha sparcv9 ppc64
-BuildRequires:  ghc-prof
+ExclusiveArch:  %{ghc_arches}
+BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  hscolour
 BuildRequires:  desktop-file-utils
@@ -54,8 +53,6 @@ Summary:        A tiling window manager
 Requires:       xterm
 # for xmessage
 Requires:       xorg-x11-apps
-# prevent doc file conflicts with ghc-xmonad
-Requires:       ghc-%{pkg_name} = %{version}-%{release}
 
 %description core
 This package contains the core xmonad window manager.
@@ -65,7 +62,7 @@ If you want to configure xmonad please also install either xmonad or xmonad-gnom
 
 %package gnome
 Summary:        xmonad GNOME session
-Requires:       xmonad-core = %{version}-%{release}
+Requires:       %{pkg_name}-core = %{version}-%{release}
 Requires:       ghc-xmonad-contrib-devel
 Requires:       gnome-session, gnome-terminal
 
@@ -122,10 +119,17 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 
 
 %changelog
+* Thu Jun 16 2011 Jens Petersen <petersen@redhat.com> - 0.9.2-9
+- ignore user configured packages when recompiling user xmonad.hs
+  to avoid linking errors (#713035)
+- don't display README.fedora initially on startup anymore
+- drop the ghc-xmonad requires from xmonad-core
+- update to cabal2spec-0.23.2
+
 * Fri May 13 2011 Jens Petersen <petersen@redhat.com> - 0.9.2-8
 - add a core subpackage and let the base package can pull in ghc-xmonad*-devel
 - add a gnome subpackage for the gnome session
-- more README.fedore improvements
+- more README.fedora improvements
 - xmonad-start: quote the xterm commands and support ~/.xmonad/session
 - fix doc files conflicts by having xmonad-core require ghc-xmonad
 

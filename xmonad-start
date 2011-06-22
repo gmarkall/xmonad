@@ -3,9 +3,7 @@
 #  if no user configuration
 if [ ! -d ~/.xmonad ]; then
     # display the manpage
-    xterm -e "man xmonad" &
-    # and the README
-    xterm -e "less /usr/share/doc/xmonad*/README.fedora" &
+    xterm -e man xmonad &
 
     # try to configure for a gnome session
     if [ "$DESKTOP_SESSION" = "xmonad-gnome" ]; then
