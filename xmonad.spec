@@ -35,7 +35,7 @@ BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  hscolour
 BuildRequires:  desktop-file-utils
-BuildRequires:  ghc-mtl-prof, ghc-X11-prof
+BuildRequires:  ghc-mtl-prof, ghc-X11-prof, ghc-extensible-exceptions-prof
 Requires:       %{pkg_name}-core = %{version}-%{release}
 Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
 Requires:       ghc-xmonad-contrib-devel
