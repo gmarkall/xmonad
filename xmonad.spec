@@ -16,7 +16,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.9.2
-Release:        10%{?dist}
+Release:        11%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -38,7 +38,7 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  ghc-mtl-prof, ghc-X11-prof, ghc-extensible-exceptions-prof
 Requires:       %{pkg_name}-core = %{version}-%{release}
 Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
-Requires:       ghc-xmonad-contrib-devel%{?_isa}
+Requires:       ghc-xmonad-contrib-devel
 
 %description
 %{common_description}
@@ -119,6 +119,9 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 
 
 %changelog
+* Thu Jul 28 2011 Jens Petersen <petersen@redhat.com> - 0.9.2-11
+- remove _isa again since it doesn't fix the libX11-devel multilib problem
+
 * Thu Jul 28 2011 Jens Petersen <petersen@redhat.com> - 0.9.2-10
 - add _isa to the ghc-xmonad-contrib-devel requires to avoid missing libX11.so
   when custom linking (reported by Evan Dale Aromin, #723558)
