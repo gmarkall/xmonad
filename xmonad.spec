@@ -16,7 +16,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.9.2
-Release:        11%{?dist}
+Release:        11%{?dist}.1
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -119,6 +119,9 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 
 
 %changelog
+* Wed Oct 12 2011 Peter Schiffer <pschiffe@redhat.com> - 0.9.2-11.1
+- rebuild with new gmp
+
 * Thu Jul 28 2011 Jens Petersen <petersen@redhat.com> - 0.9.2-11
 - remove _isa again since it doesn't fix the libX11-devel multilib problem
 
