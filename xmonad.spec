@@ -16,7 +16,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.9.2
-Release:        11%{?dist}.1
+Release:        11%{?dist}.2
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -119,6 +119,9 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 
 
 %changelog
+* Wed Oct 26 2011 Marcela Mašláňová <mmaslano@redhat.com> - 0.9.2-11.2
+- rebuild with new gmp without compat lib
+
 * Wed Oct 12 2011 Peter Schiffer <pschiffe@redhat.com> - 0.9.2-11.1
 - rebuild with new gmp
 
