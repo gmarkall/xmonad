@@ -1,10 +1,10 @@
-diff -u xmonad-0.9.1/XMonad/Core.hs\~ xmonad-0.9.1/XMonad/Core.hs
---- xmonad-0.9.1/XMonad/Core.hs~	2009-12-17 09:25:04.000000000 +1000
-+++ xmonad-0.9.1/XMonad/Core.hs	2010-09-12 16:39:48.553458230 +1000
-@@ -420,7 +420,7 @@
+diff -u xmonad-0.10/XMonad/Core.hs\~ xmonad-0.10/XMonad/Core.hs
+--- xmonad-0.10/XMonad/Core.hs~	2011-11-19 08:14:36.000000000 +0900
++++ xmonad-0.10/XMonad/Core.hs	2011-12-02 22:54:45.903562496 +0900
+@@ -456,7 +456,7 @@
          -- temporarily disable SIGCHLD ignoring:
          uninstallSignalHandlers
-         status <- bracket (openFile err WriteMode) hClose $ \h -> do
+         status <- bracket (openFile err WriteMode) hClose $ \h ->
 -            waitForProcess =<< runProcess "ghc" ["--make", "xmonad.hs", "-i", "-ilib", "-fforce-recomp", "-v0", "-o",binn] (Just dir)
 +            waitForProcess =<< runProcess "ghc" ["-dynamic", "-no-user-package-conf", "--make", "xmonad.hs", "-i", "-ilib", "-fforce-recomp", "-v0", "-o",binn] (Just dir)
                                      Nothing Nothing Nothing (Just h)

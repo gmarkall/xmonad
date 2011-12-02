@@ -1,7 +1,5 @@
 %global pkg_name xmonad
 
-%global without_haddock 1
-
 %global common_summary xmonad tiling window manager
 
 %global common_description xmonad is a tiling window manager for X. Windows are arranged\
@@ -15,8 +13,8 @@ workspace. Xinerama is fully supported, allowing windows to be tiled\
 on several screens.
 
 Name:           %{pkg_name}
-Version:        0.9.2
-Release:        11%{?dist}.2
+Version:        0.10
+Release:        1%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -33,7 +31,9 @@ Patch1:         xmonad-dynamic-link.patch
 ExclusiveArch:  %{ghc_arches}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-rpm-macros
+%if %{undefined without_hscolour}
 BuildRequires:  hscolour
+%endif
 BuildRequires:  desktop-file-utils
 BuildRequires:  ghc-mtl-prof, ghc-X11-prof, ghc-extensible-exceptions-prof
 Requires:       %{pkg_name}-core = %{version}-%{release}
@@ -96,11 +96,9 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 
 
 %files
-%defattr(-,root,root,-)
 
 
 %files core
-%defattr(-,root,root,-)
 %doc CONFIG LICENSE README man/%{name}.hs README.fedora
 %attr(755,root,root) %{_bindir}/%{name}
 %attr(755,root,root) %{_bindir}/%{name}-start
@@ -110,7 +108,6 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 
 
 %files gnome
-%defattr(-,root,root,-)
 %{_datadir}/xsessions/%{name}-gnome.desktop
 %{_datadir}/gnome-session/sessions/%{name}.session
 
@@ -119,6 +116,10 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 
 
 %changelog
+* Fri Dec  2 2011 Jens Petersen <petersen@redhat.com> - 0.10-1
+- update to 0.10 and cabal2spec-0.24.1
+- re-enable haddock
+
 * Wed Oct 26 2011 Marcela Mašláňová <mmaslano@redhat.com> - 0.9.2-11.2
 - rebuild with new gmp without compat lib
 
