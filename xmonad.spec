@@ -35,7 +35,13 @@ BuildRequires:  ghc-rpm-macros
 BuildRequires:  hscolour
 %endif
 BuildRequires:  desktop-file-utils
-BuildRequires:  ghc-mtl-prof, ghc-X11-prof, ghc-extensible-exceptions-prof
+BuildRequires:  ghc-X11-prof
+BuildRequires:  ghc-containers-prof
+BuildRequires:  ghc-mtl-prof
+BuildRequires:  ghc-extensible-exceptions-prof
+BuildRequires:  ghc-process-prof
+BuildRequires:  ghc-unix-prof
+BuildRequires:  ghc-utf8-string-prof
 Requires:       %{pkg_name}-config = %{version}-%{release}
 
 %description
@@ -130,6 +136,7 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 %changelog
 * Fri Dec  2 2011 Jens Petersen <petersen@redhat.com> - 0.10-1
 - update to 0.10 and cabal2spec-0.24.1
+- depends on utf8-string
 - re-enable haddock
 - replace gnomeConfig in xmonad-start with xmonad.hs in new config subpackage
 - drop the dynamic linking patch: dyn libs need to be default first (#744274)
