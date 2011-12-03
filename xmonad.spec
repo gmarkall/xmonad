@@ -27,7 +27,7 @@ Source3:        xmonad.desktop
 Source4:        README.fedora
 Source5:        xmonad-gnome-session.desktop
 Source6:        xmonad.session
-Patch1:         xmonad-dynamic-link.patch
+Source7:        xmonad.hs
 ExclusiveArch:  %{ghc_arches}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-rpm-macros
@@ -36,9 +36,7 @@ BuildRequires:  hscolour
 %endif
 BuildRequires:  desktop-file-utils
 BuildRequires:  ghc-mtl-prof, ghc-X11-prof, ghc-extensible-exceptions-prof
-Requires:       %{pkg_name}-core = %{version}-%{release}
-Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
-Requires:       ghc-xmonad-contrib-devel
+Requires:       %{pkg_name}-config = %{version}-%{release}
 
 %description
 %{common_description}
@@ -51,6 +49,7 @@ allowing xmonad to be configured with "~/.xmonad/xmonad.hs".
 Summary:        A tiling window manager
 # required until there is a command to open a system-default xterminal
 Requires:       xterm
+Requires:       dmenu
 # for xmessage
 Requires:       xorg-x11-apps
 
@@ -60,10 +59,19 @@ This package contains the core xmonad window manager.
 If you want to configure xmonad please also install either xmonad or xmonad-gnome.
 
 
+%package config
+Summary:        xmonad config
+Requires:       %{pkg_name}-core = %{version}-%{release}
+Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
+Requires:       ghc-xmonad-contrib-devel
+
+%description config
+This package adds desktop configuration for xmonad.
+
+
 %package gnome
 Summary:        xmonad GNOME session
-Requires:       %{pkg_name}-core = %{version}-%{release}
-Requires:       ghc-xmonad-contrib-devel
+Requires:       %{pkg_name}-config = %{version}-%{release}
 Requires:       gnome-session, gnome-terminal
 
 %description gnome
@@ -74,7 +82,6 @@ in a GNOME session.
 
 %prep
 %setup -q
-%patch1 -p1 -b .orig
 cp -p %SOURCE4 .
 
 
@@ -91,6 +98,7 @@ install -p -m 0755 -D %SOURCE2 %{buildroot}%{_bindir}/%{name}-start
 desktop-file-install --dir=${RPM_BUILD_ROOT}%{_datadir}/applications %{SOURCE3}
 install -p -m 0644 -D %SOURCE5 %{buildroot}%{_datadir}/xsessions/%{name}-gnome.desktop
 install -p -m 0644 -D %SOURCE6 %{buildroot}%{_datadir}/gnome-session/sessions/%{name}.session
+install -p -m 0644 -D %SOURCE7 %{buildroot}%{_datadir}/xmonad/%{name}.hs
 
 rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 
@@ -107,6 +115,10 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 %{_datadir}/xsessions/%{name}.desktop
 
 
+%files config
+%{_datadir}/xmonad/%{name}.hs
+
+
 %files gnome
 %{_datadir}/xsessions/%{name}-gnome.desktop
 %{_datadir}/gnome-session/sessions/%{name}.session
@@ -119,6 +131,9 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 * Fri Dec  2 2011 Jens Petersen <petersen@redhat.com> - 0.10-1
 - update to 0.10 and cabal2spec-0.24.1
 - re-enable haddock
+- replace gnomeConfig in xmonad-start with xmonad.hs in new config subpackage
+- drop the dynamic linking patch: dyn libs need to be default first (#744274)
+- require dmenu
 
 * Wed Oct 26 2011 Marcela Mašláňová <mmaslano@redhat.com> - 0.9.2-11.2
 - rebuild with new gmp without compat lib
