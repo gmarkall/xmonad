@@ -1,3 +1,7 @@
+# cabal2spec-0.25.2
+# https://fedoraproject.org/wiki/Packaging:Haskell
+# https://fedoraproject.org/wiki/PackagingDrafts/Haskell
+
 %global pkg_name xmonad
 
 %global common_summary xmonad tiling window manager
@@ -14,13 +18,18 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.10
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
 License:        BSD
+# BEGIN cabal2spec
 URL:            http://hackage.haskell.org/package/%{name}
 Source0:        http://hackage.haskell.org/packages/archive/%{name}/%{version}/%{name}-%{version}.tar.gz
+ExclusiveArch:  %{ghc_arches}
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros %{!?without_hscolour:hscolour}
+# END cabal2spec
 Source1:        xmonad-session.desktop
 Source2:        xmonad-start
 Source3:        xmonad.desktop
@@ -28,12 +37,6 @@ Source4:        README.fedora
 Source5:        xmonad-gnome-session.desktop
 Source6:        xmonad.session
 Source7:        xmonad.hs
-ExclusiveArch:  %{ghc_arches}
-BuildRequires:  ghc-Cabal-devel
-BuildRequires:  ghc-rpm-macros
-%if %{undefined without_hscolour}
-BuildRequires:  hscolour
-%endif
 BuildRequires:  desktop-file-utils
 BuildRequires:  ghc-X11-prof
 BuildRequires:  ghc-containers-prof
@@ -109,6 +112,19 @@ install -p -m 0644 -D %SOURCE7 %{buildroot}%{_datadir}/xmonad/%{name}.hs
 rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 
 
+%ghc_package
+
+%ghc_description
+
+
+%ghc_devel_package
+
+%ghc_devel_description
+
+
+%ghc_devel_post_postun
+
+
 %files
 
 
@@ -130,10 +146,14 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 %{_datadir}/gnome-session/sessions/%{name}.session
 
 
-%ghc_binlib_package
+%ghc_files
+%doc STYLE
 
 
 %changelog
+* Fri Jan  6 2012 Jens Petersen <petersen@redhat.com> - 0.10-2
+- update to cabal2spec-0.25.2
+
 * Fri Dec  2 2011 Jens Petersen <petersen@redhat.com> - 0.10-1
 - update to 0.10 and cabal2spec-0.24.1
 - depends on utf8-string
