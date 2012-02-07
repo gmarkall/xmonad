@@ -16,4 +16,5 @@ main = do
 desktop "gnome" = gnomeConfig
 desktop "kde" = kde4Config
 desktop "xfce" = xfceConfig
+desktop "xmonad-gnome" = gnomeConfig
 desktop _ = desktopConfig
