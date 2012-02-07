@@ -53,6 +53,8 @@ Requires:       %{pkg_name}-config = %{version}-%{release}
 This is a meta-package that installs xmonad-core and ghc-xmonad-contrib-devel,
 allowing xmonad to be configured with "~/.xmonad/xmonad.hs".
 
+To use xmonad with GNOME, please install xmonad-gnome.
+
 
 %package core
 Summary:        A tiling window manager
@@ -84,6 +86,8 @@ Requires:       %{pkg_name}-config = %{version}-%{release}
 Requires:       gnome-session, gnome-terminal
 
 %description gnome
+%{common_description}
+
 This package adds a "xmonad-gnome" X session configuration
 so that xmonad can be started easily from GDM to run
 in a GNOME session.
