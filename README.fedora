@@ -12,53 +12,27 @@ For GNOME support please install xmonad-gnome
 and select "xmonad GNOME" in GDM's session menu, which will run
 "gnome-session --session=xmonad".
 
+= Gnome Panel =
+To activate the gnome-panel menu use Alt+Super+Button3 or Alt+Button3.
+
 = xmonad-start =
 For new users without "~/.xmonad/", Fedora's xmonad-start script
-displays "man xmonad" and "less README.fedora" in xterms to provide help initially.
+displays "man xmonad" in an xterm to provide help initially.
 
 To stop this behaviour, just create "~/.xmonad/".
 
-For an xmonad-gnome session for new users, xmonad-start will create
-a basic "~/.xmonad/xmonad.hs" file configured for Gnome.
+With the xmonad-gnome or xmonad packages installed, xmonad-start will create
+a basic "~/.xmonad/xmonad.hs" file configured for desktops.
 
-= Customizing and configuring xmonad =
-For documentation and examples see:
+= Configuration references =
 - xmonad man-page
-- /usr/share/doc/xmonad-$version/xmonad.hs (full default basic configuration)
+- /usr/share/doc/xmonad-$version/xmonad.hs (default upstream configuration)
 - /usr/share/doc/ghc/html/libraries/xmonad-contrib-$version/index.html
 and online:
-- Xmonad wiki: http://www.haskell.org/haskellwiki/Xmonad
+- XMonad wiki: http://www.haskell.org/haskellwiki/Xmonad
 - http://hackage.haskell.org/packages/archive/xmonad-contrib/latest/doc/html/XMonad-Doc.html
   (detailed configuration information and examples)
 - http://xmonad.org/ website
-
-To make use of extensions and Desktop Environment support,
-you need to install ghc-xmonad-contrib-devel.
-
-== Configuration for Desktop Environments ==
-The default xmonad configuration does not work well with desktop environments.
-
-The following basic generic configuration requires ghc-xmonad-contrib-devel
-to be installed, and should get it working:
-
-$ mkdir ~/.xmonad
-$ cat > ~/.xmonad/xmonad.hs << EOF
-import XMonad
-import XMonad.Config.Desktop
-
-main = xmonad desktopConfig
-EOF
-$ 
-
-You can replace the generic "[Dd]esktop" by:
-- "[Gg]nome" for better GNOME support
-- "[Kk]de[4]" for KDE support
-- "[Xx]fce" for XFCE support.
-
-See:
-- http://hackage.haskell.org/packages/archive/xmonad-contrib/latest/doc/html/XMonad-Config-Desktop.html
-- http://haskell.org/haskellwiki/Xmonad/Basic_Desktop_Environment_Integration
-for more info on how to setup desktop support.
 
 = Bluetile =
 New users may find the Bluetile window manager built on top of
