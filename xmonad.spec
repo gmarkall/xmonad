@@ -18,7 +18,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.10
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -151,6 +151,10 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 
 
 %changelog
+* Tue Feb  7 2012 Jens Petersen <petersen@redhat.com> - 0.10-3
+- xmonad-gnome sessions now use gnomeConfig in xmonad.hs
+- add note about gnome-panel menu activation in README.fedora
+
 * Fri Jan  6 2012 Jens Petersen <petersen@redhat.com> - 0.10-2
 - update to cabal2spec-0.25.2
 
