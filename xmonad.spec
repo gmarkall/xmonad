@@ -18,7 +18,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.10
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -45,29 +45,45 @@ BuildRequires:  ghc-extensible-exceptions-prof
 BuildRequires:  ghc-process-prof
 BuildRequires:  ghc-unix-prof
 BuildRequires:  ghc-utf8-string-prof
+Requires:       %{pkg_name}-basic = %{version}-%{release}
 Requires:       %{pkg_name}-config = %{version}-%{release}
 
 %description
 %{common_description}
 
-This is a meta-package that installs xmonad-core and ghc-xmonad-contrib-devel,
-allowing xmonad to be configured with "~/.xmonad/xmonad.hs".
+This is a meta-package that installs xmonad-basic and ghc-xmonad-contrib-devel,
+allowing xmonad to be customized with "~/.xmonad/xmonad.hs".
 
 To use xmonad with GNOME, please install xmonad-gnome.
 
 
-%package core
+%package basic
 Summary:        A tiling window manager
+Requires:       %{pkg_name}-core = %{version}-%{release}
 # required until there is a command to open a system-default xterminal
 Requires:       xterm
 Requires:       dmenu
+Obsoletes:      %{pkg_name}-core < %{version}-%{release}
+
+%description basic
+%{common_description}
+
+This meta-package allows running the default basic upstream xmonad
+configuration with xterm and dmenu.
+
+If you want to customize xmonad, please install xmonad or xmonad-gnome.
+
+
+%package core
+Summary:        A tiling window manager
 # for xmessage
 Requires:       xorg-x11-apps
 
 %description core
-This package contains the core xmonad window manager.
+This package just provides the core xmonad window manager program.
 
-If you want to configure xmonad please also install either xmonad or xmonad-gnome.
+To run the default xmonad configuration you should install xmonad-basic.
+If you want to customize xmonad please install either xmonad or xmonad-gnome.
 
 
 %package config
@@ -77,7 +93,7 @@ Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
 Requires:       ghc-xmonad-contrib-devel
 
 %description config
-This package adds desktop configuration for xmonad.
+This package provides a basic desktop configuration for xmonad.
 
 
 %package gnome
@@ -132,6 +148,9 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 %files
 
 
+%files basic
+
+
 %files core
 %doc CONFIG LICENSE README man/%{name}.hs README.fedora
 %attr(755,root,root) %{_bindir}/%{name}
@@ -155,6 +174,10 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 
 
 %changelog
+* Tue Feb  7 2012 Jens Petersen <petersen@redhat.com> - 0.10-4
+- new "basic" meta-subpackage for pulling in xterm and dmenu for the default
+  basic upstream config, also used by the base package
+
 * Tue Feb  7 2012 Jens Petersen <petersen@redhat.com> - 0.10-3
 - xmonad-gnome sessions now use gnomeConfig in xmonad.hs
 - add note about gnome-panel menu activation in README.fedora
