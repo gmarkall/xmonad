@@ -18,7 +18,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.10
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -174,6 +174,10 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 
 
 %changelog
+* Mon Feb 20 2012 Jens Petersen <petersen@redhat.com> - 0.10-5
+- use gnome-terminal to display initial manpage from xmonad-gnome
+- change the xmonad-gnome session name to xmonad-gnome
+
 * Tue Feb  7 2012 Jens Petersen <petersen@redhat.com> - 0.10-4
 - new "basic" meta-subpackage for pulling in xterm and dmenu for the default
   basic upstream config, also used by the base package

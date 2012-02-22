@@ -2,9 +2,6 @@
 
 #  if no user configuration
 if [ ! -d ~/.xmonad ]; then
-    # display the manpage
-    xterm -e man xmonad &
-
     # add a desktop friendly config if possible
     if [ -r /usr/share/xmonad/xmonad.hs ]; then
 	mkdir ~/.xmonad
@@ -12,6 +9,12 @@ if [ ! -d ~/.xmonad ]; then
     else
 	echo "xmonad-start: install xmonad-config to customize"
     fi
+    # display the manpage
+    case $DESKTOP_SESSION in
+	xmonad-gnome) TERM_CMD="gnome-terminal -x" ;;
+	*) TERM_CMD="xterm -e" ;;
+    esac
+    $TERM_CMD man xmonad &
 fi
 
 if [ -r ~/.xmonad/session ]; then
