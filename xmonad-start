@@ -14,7 +14,7 @@ if [ ! -d ~/.xmonad ]; then
 	xmonad-gnome) TERM_CMD="gnome-terminal -x" ;;
 	*) TERM_CMD="xterm -e" ;;
     esac
-    $TERM_CMD man xmonad &
+    (sleep 5; $TERM_CMD man xmonad) &
 fi
 
 if [ -r ~/.xmonad/session ]; then

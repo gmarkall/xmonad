@@ -18,7 +18,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.10
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -169,11 +169,15 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
 %{_datadir}/gnome-session/sessions/%{name}.session
 
 
-%ghc_files
+%ghc_files LICENSE
 %doc STYLE
 
 
 %changelog
+* Fri Mar 23 2012 Jens Petersen <petersen@redhat.com> - 0.10-6
+- try delaying manpage terminal startup 5s to avoid window resize
+- add license to ghc_files
+
 * Mon Feb 20 2012 Jens Petersen <petersen@redhat.com> - 0.10-5
 - use gnome-terminal to display initial manpage from xmonad-gnome
 - change the xmonad-gnome session name to xmonad-gnome
