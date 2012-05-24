@@ -130,6 +130,8 @@ install -p -m 0644 -D %SOURCE6 %{buildroot}%{_datadir}/gnome-session/sessions/%{
 install -p -m 0644 -D %SOURCE7 %{buildroot}%{_datadir}/xmonad/%{name}.hs
 
 rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
+# ship LICENSE in xmonad-core
+rm %{buildroot}%{_docdir}/%{name}-%{version}/LICENSE
 
 
 %ghc_package
