@@ -1,11 +1,13 @@
 #!/bin/sh
 
+XMONAD_DIR=$HOME/.xmonad
+
 #  if no user configuration
-if [ ! -d ~/.xmonad ]; then
+if [ ! -d $XMONAD_DIR ]; then
     # add a desktop friendly config if possible
     if [ -r /usr/share/xmonad/xmonad.hs ]; then
-	mkdir ~/.xmonad
-	cp -p /usr/share/xmonad/xmonad.hs ~/.xmonad
+	mkdir $XMONAD_DIR
+	cp -p /usr/share/xmonad/xmonad.hs $XMONAD_DIR
     else
 	echo "xmonad-start: install xmonad-config to customize"
     fi
@@ -15,10 +17,17 @@ if [ ! -d ~/.xmonad ]; then
 	*) TERM_CMD="xterm -e" ;;
     esac
     (sleep 5; $TERM_CMD man xmonad) &
+else
+    XMONAD_CUSTOM=$XMONAD_DIR/xmonad-$(arch)-linux
+    if [ -r $XMONAD_DIR/xmonad.hs -a -x $XMONAD_CUSTOM ]; then
+	if ldd $XMONAD_DIR/xmonad-$(arch)-linux | grep -q "not found"; then
+	    touch $XMONAD_DIR/xmonad.hs
+	fi
+    fi
 fi
 
-if [ -r ~/.xmonad/session ]; then
-    sh ~/.xmonad/session
+if [ -r $XMONAD_DIR/session ]; then
+    sh $XMONAD_DIR/session
 fi
 
 xmonad

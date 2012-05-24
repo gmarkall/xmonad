@@ -18,7 +18,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.10
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -175,6 +175,10 @@ rm %{buildroot}%{_docdir}/%{name}-%{version}/LICENSE
 
 
 %changelog
+* Thu May 24 2012 Jens Petersen <petersen@redhat.com> - 0.10-7
+- xmonad-start: if user's custom xmonad has missing shared lib dependencies
+  touch xmonad.hs so it gets recompiled (#806624 reported by Erik Streb)
+
 * Fri Mar 23 2012 Jens Petersen <petersen@redhat.com> - 0.10-6
 - try delaying manpage terminal startup 5s to avoid window resize
 - add license to ghc_files
