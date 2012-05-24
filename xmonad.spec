@@ -18,7 +18,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.10
-Release:        7%{?dist}
+Release:        8%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -130,7 +130,6 @@ install -p -m 0644 -D %SOURCE6 %{buildroot}%{_datadir}/gnome-session/sessions/%{
 install -p -m 0644 -D %SOURCE7 %{buildroot}%{_datadir}/xmonad/%{name}.hs
 
 rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
-rm %{buildroot}%{_docdir}/%{name}-%{version}/LICENSE
 
 
 %ghc_package
@@ -150,6 +149,7 @@ rm %{buildroot}%{_docdir}/%{name}-%{version}/LICENSE
 
 
 %files basic
+%{_datadir}/xsessions/%{name}.desktop
 
 
 %files core
@@ -158,7 +158,6 @@ rm %{buildroot}%{_docdir}/%{name}-%{version}/LICENSE
 %attr(755,root,root) %{_bindir}/%{name}-start
 %{_mandir}/man1/%{name}.1*
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/xsessions/%{name}.desktop
 
 
 %files config
@@ -175,8 +174,11 @@ rm %{buildroot}%{_docdir}/%{name}-%{version}/LICENSE
 
 
 %changelog
+* Thu May 24 2012 Jens Petersen <petersen@redhat.com> - 0.10-8
+- move xmonad.desktop from core to basic subpackage
+
 * Thu May 24 2012 Jens Petersen <petersen@redhat.com> - 0.10-7
-- xmonad-start: if user's custom xmonad has missing shared lib dependencies
+- xmonad-start: if user binary has missing shared lib dependencies
   touch xmonad.hs so it gets recompiled (#806624 reported by Erik Streb)
 
 * Fri Mar 23 2012 Jens Petersen <petersen@redhat.com> - 0.10-6
