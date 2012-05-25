@@ -18,7 +18,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.10
-Release:        8%{?dist}
+Release:        9%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -63,7 +63,7 @@ Requires:       %{pkg_name}-core = %{version}-%{release}
 # required until there is a command to open a system-default xterminal
 Requires:       xterm
 Requires:       dmenu
-Obsoletes:      %{pkg_name}-core < %{version}-%{release}
+Obsoletes:      %{pkg_name}-core < 0.10-5
 
 %description basic
 %{common_description}
@@ -176,6 +176,9 @@ rm %{buildroot}%{_docdir}/%{name}-%{version}/LICENSE
 
 
 %changelog
+* Fri May 25 2012 Jens Petersen <petersen@redhat.com> - 0.10-9
+- basic subpackage should only obsolete core from before the split
+
 * Thu May 24 2012 Jens Petersen <petersen@redhat.com> - 0.10-8
 - move xmonad.desktop from core to basic subpackage
 
