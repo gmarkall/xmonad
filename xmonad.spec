@@ -18,7 +18,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.10
-Release:        9%{?dist}
+Release:        10%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -176,6 +176,10 @@ rm %{buildroot}%{_docdir}/%{name}-%{version}/LICENSE
 
 
 %changelog
+* Tue May 29 2012 Jens Petersen <petersen@redhat.com> - 0.10-10
+- fix user binary ldd check on i686/i386 using "uname -i" not "arch",
+  and then recompile directly instead of just touching xmonad.hs first
+
 * Fri May 25 2012 Jens Petersen <petersen@redhat.com> - 0.10-9
 - basic subpackage should only obsolete core from before the split
 

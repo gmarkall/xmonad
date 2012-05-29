@@ -18,10 +18,10 @@ if [ ! -d $XMONAD_DIR ]; then
     esac
     (sleep 5; $TERM_CMD man xmonad) &
 else
-    XMONAD_CUSTOM=$XMONAD_DIR/xmonad-$(arch)-linux
+    XMONAD_CUSTOM=$XMONAD_DIR/xmonad-$(uname -i)-linux
     if [ -r $XMONAD_DIR/xmonad.hs -a -x $XMONAD_CUSTOM ]; then
 	if ldd $XMONAD_DIR/xmonad-$(arch)-linux | grep -q "not found"; then
-	    touch $XMONAD_DIR/xmonad.hs
+	    xmonad --recompile
 	fi
     fi
 fi
