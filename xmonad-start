@@ -20,7 +20,7 @@ if [ ! -d $XMONAD_DIR ]; then
 else
     XMONAD_CUSTOM=$XMONAD_DIR/xmonad-$(uname -i)-linux
     if [ -r $XMONAD_DIR/xmonad.hs -a -x $XMONAD_CUSTOM ]; then
-	if ldd $XMONAD_DIR/xmonad-$(arch)-linux | grep -q "not found"; then
+	if ldd $XMONAD_CUSTOM | grep -q "not found"; then
 	    xmonad --recompile
 	fi
     fi

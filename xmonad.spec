@@ -18,7 +18,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.10
-Release:        10%{?dist}
+Release:        11%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -176,6 +176,9 @@ rm %{buildroot}%{_docdir}/%{name}-%{version}/LICENSE
 
 
 %changelog
+* Thu May 31 2012 Jens Petersen <petersen@redhat.com> - 0.10-11
+- really fix xmonad-start to use hardware-platform correctly
+
 * Tue May 29 2012 Jens Petersen <petersen@redhat.com> - 0.10-10
 - fix user binary ldd check on i686/i386 using "uname -i" not "arch",
   and then recompile directly instead of just touching xmonad.hs first
