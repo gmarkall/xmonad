@@ -1,0 +1,12 @@
+diff -u xmonad-0.10/xmonad.cabal\~ xmonad-0.10/xmonad.cabal
+--- xmonad-0.10/xmonad.cabal~	2011-11-19 08:14:36.000000000 +0900
++++ xmonad-0.10/xmonad.cabal	2012-06-11 10:46:59.925650241 +0900
+@@ -46,7 +46,7 @@
+         build-depends: base < 5 && >=3, containers, directory, process, filepath, extensible-exceptions
+     else
+         build-depends: base < 3
+-    build-depends: X11>=1.5.0.0 && < 1.6, mtl, unix,
++    build-depends: X11>=1.5.0.0 && < 1.7, mtl, unix,
+                    utf8-string >= 0.3 && < 0.4
+ 
+     if true

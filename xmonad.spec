@@ -18,7 +18,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.10
-Release:        11%{?dist}
+Release:        12%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -47,6 +47,7 @@ BuildRequires:  ghc-unix-prof
 BuildRequires:  ghc-utf8-string-prof
 Requires:       %{pkg_name}-basic = %{version}-%{release}
 Requires:       %{pkg_name}-config = %{version}-%{release}
+Patch1:         xmonad-0.10-X11-1.6.patch
 
 %description
 %{common_description}
@@ -111,6 +112,7 @@ in a GNOME session.
 
 %prep
 %setup -q
+%patch1 -p1 -b .orig
 cp -p %SOURCE4 .
 
 
@@ -176,6 +178,9 @@ rm %{buildroot}%{_docdir}/%{name}-%{version}/LICENSE
 
 
 %changelog
+* Mon Jun 11 2012 Jens Petersen <petersen@redhat.com> - 0.10-12
+- allow building with X11-1.6
+
 * Thu May 31 2012 Jens Petersen <petersen@redhat.com> - 0.10-11
 - really fix xmonad-start to use hardware-platform correctly
 
