@@ -18,7 +18,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.10
-Release:        12%{?dist}
+Release:        13%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -38,13 +38,13 @@ Source5:        xmonad-gnome-session.desktop
 Source6:        xmonad.session
 Source7:        xmonad.hs
 BuildRequires:  desktop-file-utils
-BuildRequires:  ghc-X11-prof
-BuildRequires:  ghc-containers-prof
-BuildRequires:  ghc-mtl-prof
-BuildRequires:  ghc-extensible-exceptions-prof
-BuildRequires:  ghc-process-prof
-BuildRequires:  ghc-unix-prof
-BuildRequires:  ghc-utf8-string-prof
+BuildRequires:  ghc-X11-devel
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-extensible-exceptions-devel
+BuildRequires:  ghc-process-devel
+BuildRequires:  ghc-unix-devel
+BuildRequires:  ghc-utf8-string-devel
 Requires:       %{pkg_name}-basic = %{version}-%{release}
 Requires:       %{pkg_name}-config = %{version}-%{release}
 Patch1:         xmonad-0.10-X11-1.6.patch
@@ -178,6 +178,9 @@ rm %{buildroot}%{_docdir}/%{name}-%{version}/LICENSE
 
 
 %changelog
+* Mon Jul 16 2012 Jens Petersen <petersen@redhat.com> - 0.10-13
+- change prof BRs to devel
+
 * Mon Jun 11 2012 Jens Petersen <petersen@redhat.com> - 0.10-12
 - allow building with X11-1.6
 
