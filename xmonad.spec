@@ -18,7 +18,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.10
-Release:        13%{?dist}
+Release:        14%{?dist}
 Summary:        A tiling window manager
 
 Group:          User Interface/X
@@ -178,6 +178,9 @@ rm %{buildroot}%{_docdir}/%{name}-%{version}/LICENSE
 
 
 %changelog
+* Sun Jul 22 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.10-14
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
+
 * Mon Jul 16 2012 Jens Petersen <petersen@redhat.com> - 0.10-13
 - change prof BRs to devel
 
