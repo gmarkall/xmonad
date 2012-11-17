@@ -1,10 +1,9 @@
-# cabal2spec-0.25.2
 # https://fedoraproject.org/wiki/Packaging:Haskell
 # https://fedoraproject.org/wiki/PackagingDrafts/Haskell
 
 %global pkg_name xmonad
 
-%global common_summary xmonad tiling window manager
+%global common_summary XMonad tiling window manager
 
 %global common_description xmonad is a tiling window manager for X. Windows are arranged\
 automatically to tile the screen without gaps or overlap, maximising\
@@ -18,18 +17,12 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.10
-Release:        14%{?dist}
+Release:        15%{?dist}
 Summary:        A tiling window manager
 
-Group:          User Interface/X
 License:        BSD
-# BEGIN cabal2spec
 URL:            http://hackage.haskell.org/package/%{name}
 Source0:        http://hackage.haskell.org/packages/archive/%{name}/%{version}/%{name}-%{version}.tar.gz
-ExclusiveArch:  %{ghc_arches}
-BuildRequires:  ghc-Cabal-devel
-BuildRequires:  ghc-rpm-macros %{!?without_hscolour:hscolour}
-# END cabal2spec
 Source1:        xmonad-session.desktop
 Source2:        xmonad-start
 Source3:        xmonad.desktop
@@ -37,17 +30,25 @@ Source4:        README.fedora
 Source5:        xmonad-gnome-session.desktop
 Source6:        xmonad.session
 Source7:        xmonad.hs
-BuildRequires:  desktop-file-utils
+Patch1:         xmonad-0.10-X11-1.6.patch
+Patch2:         xmonad-0.10-WM_TAKE_FOCUS-track-currently-processing-event.patch
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+# Begin cabal-rpm deps:
 BuildRequires:  ghc-X11-devel
 BuildRequires:  ghc-containers-devel
-BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-directory-devel
 BuildRequires:  ghc-extensible-exceptions-devel
+BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-process-devel
 BuildRequires:  ghc-unix-devel
 BuildRequires:  ghc-utf8-string-devel
+# End cabal-rpm deps
+BuildRequires:  desktop-file-utils
 Requires:       %{pkg_name}-basic = %{version}-%{release}
 Requires:       %{pkg_name}-config = %{version}-%{release}
-Patch1:         xmonad-0.10-X11-1.6.patch
 
 %description
 %{common_description}
@@ -113,6 +114,7 @@ in a GNOME session.
 %prep
 %setup -q
 %patch1 -p1 -b .orig
+%patch2 -p1 -b .orig
 cp -p %SOURCE4 .
 
 
@@ -178,6 +180,12 @@ rm %{buildroot}%{_docdir}/%{name}-%{version}/LICENSE
 
 
 %changelog
+* Fri Nov 16 2012 Jens Petersen <petersen@redhat.com> - 0.10-15
+- add upstream patches for ICCCM WM_TAKE_FOCUS protocol and
+  tracking currently processing event to fix focus for Java apps:
+  see http://code.google.com/p/xmonad/issues/detail?id=177 (#874855)
+- update to cabal-rpm packaging
+
 * Sun Jul 22 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.10-14
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 

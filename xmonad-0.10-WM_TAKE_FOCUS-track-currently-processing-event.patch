@@ -1,0 +1,105 @@
+Mon Feb 22 06:45:12 PST 2010  Adam Vogt <vogt.adam@gmail.com>
+  * Resolve conflicts Geoff Reedy's window focus hack.
+Sat Oct 10 16:19:07 PDT 2009  Geoff Reedy <geoff@programmer-monk.net>
+  * Give focus to windows that don't set the input hint
+Sun Jun 21 22:19:11 PDT 2009  Geoff Reedy <geoff@programmer-monk.net>
+  * implement the ICCCM WM_TAKE_FOCUS protocol
+Sun Jun 21 20:56:49 PDT 2009  Geoff Reedy <geoff@programmer-monk.net>
+  * track currently processing event
+diff -rN -u old-xmonad/XMonad/Core.hs new-xmonad/XMonad/Core.hs
+--- old-xmonad/XMonad/Core.hs	2012-11-14 22:40:50.637523085 -0800
++++ new-xmonad/XMonad/Core.hs	2012-11-14 22:40:50.649523104 -0800
+@@ -26,7 +26,7 @@
+     runX, catchX, userCode, userCodeDef, io, catchIO, installSignalHandlers, uninstallSignalHandlers,
+     withDisplay, withWindowSet, isRoot, runOnWorkspaces,
+     getAtom, spawn, spawnPID, xfork, getXMonadDir, recompile, trace, whenJust, whenX,
+-    atom_WM_STATE, atom_WM_PROTOCOLS, atom_WM_DELETE_WINDOW, ManageHook, Query(..), runQuery
++    atom_WM_STATE, atom_WM_PROTOCOLS, atom_WM_DELETE_WINDOW, atom_WM_TAKE_FOCUS, ManageHook, Query(..), runQuery
+   ) where
+ 
+ import XMonad.StackSet hiding (modify)
+@@ -86,6 +86,8 @@
+     , mousePosition :: !(Maybe (Position, Position))
+                                       -- ^ position of the mouse according to
+                                       -- the event currently being processed
++    , currentEvent :: !(Maybe Event)
++                                      -- ^ event currently being processed
+     }
+ 
+ -- todo, better name
+@@ -202,10 +204,11 @@
+ getAtom str = withDisplay $ \dpy -> io $ internAtom dpy str False
+ 
+ -- | Common non-predefined atoms
+-atom_WM_PROTOCOLS, atom_WM_DELETE_WINDOW, atom_WM_STATE :: X Atom
++atom_WM_PROTOCOLS, atom_WM_DELETE_WINDOW, atom_WM_STATE, atom_WM_TAKE_FOCUS :: X Atom
+ atom_WM_PROTOCOLS       = getAtom "WM_PROTOCOLS"
+ atom_WM_DELETE_WINDOW   = getAtom "WM_DELETE_WINDOW"
+ atom_WM_STATE           = getAtom "WM_STATE"
++atom_WM_TAKE_FOCUS      = getAtom "WM_TAKE_FOCUS"
+ 
+ ------------------------------------------------------------------------
+ -- LayoutClass handling. See particular instances in Operations.hs
+diff -rN -u old-xmonad/XMonad/Main.hsc new-xmonad/XMonad/Main.hsc
+--- old-xmonad/XMonad/Main.hsc	2012-11-14 22:40:50.636523083 -0800
++++ new-xmonad/XMonad/Main.hsc	2012-11-14 22:40:50.652523110 -0800
+@@ -121,7 +121,8 @@
+             , keyActions    = keys xmc xmc
+             , buttonActions = mouseBindings xmc xmc
+             , mouseFocused  = False
+-            , mousePosition = Nothing }
++            , mousePosition = Nothing
++            , currentEvent  = Nothing }
+ 
+         st = XState
+             { windowset       = initialWinset
+@@ -163,7 +164,7 @@
+         prehandle e = let mouse = do guard (ev_event_type e `elem` evs)
+                                      return (fromIntegral (ev_x_root e)
+                                             ,fromIntegral (ev_y_root e))
+-                      in local (\c -> c { mousePosition = mouse }) (handleWithHook e)
++                      in local (\c -> c { mousePosition = mouse, currentEvent = Just e }) (handleWithHook e)
+         evs = [ keyPress, keyRelease, enterNotify, leaveNotify
+               , buttonPress, buttonRelease]
+ 
+diff -rN -u old-xmonad/XMonad/Operations.hs new-xmonad/XMonad/Operations.hs
+--- old-xmonad/XMonad/Operations.hs	2012-11-14 22:40:50.630523074 -0800
++++ new-xmonad/XMonad/Operations.hs	2012-11-14 22:40:50.654523114 -0800
+@@ -24,7 +24,7 @@
+ import Data.Maybe
+ import Data.Monoid          (Endo(..))
+ import Data.List            (nub, (\\), find)
+-import Data.Bits            ((.|.), (.&.), complement)
++import Data.Bits            ((.|.), (.&.), complement, testBit)
+ import Data.Ratio
+ import qualified Data.Map as M
+ import qualified Data.Set as S
+@@ -325,7 +325,27 @@
+ 
+     -- If we ungrab buttons on the root window, we lose our mouse bindings.
+     whenX (not <$> isRoot w) $ setButtonGrab False w
+-    io $ setInputFocus dpy w revertToPointerRoot 0
++
++    hints <- io $ getWMHints dpy w
++    protocols <- io $ getWMProtocols dpy w
++    wmprot <- atom_WM_PROTOCOLS
++    wmtf <- atom_WM_TAKE_FOCUS
++    currevt <- asks currentEvent
++    let inputHintSet = wmh_flags hints `testBit` inputHintBit
++
++    when ((inputHintSet && wmh_input hints) || (not inputHintSet)) $
++      io $ do setInputFocus dpy w revertToPointerRoot 0
++    when (wmtf `elem` protocols) $
++      io $ allocaXEvent $ \ev -> do
++        setEventType ev clientMessage
++        setClientMessageEvent ev w wmprot 32 wmtf $ maybe currentTime event_time currevt
++        sendEvent dpy w False noEventMask ev
++        where event_time ev =
++                if (ev_event_type ev) `elem` timedEvents then
++                  ev_time ev
++                else
++                  currentTime
++              timedEvents = [ keyPress, keyRelease, buttonPress, buttonRelease, enterNotify, leaveNotify, selectionRequest ]
+ 
+ ------------------------------------------------------------------------
+ -- Message handling
