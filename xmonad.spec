@@ -17,7 +17,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.10
-Release:        15%{?dist}
+Release:        16%{?dist}
 Summary:        A tiling window manager
 
 License:        BSD
@@ -180,6 +180,9 @@ rm %{buildroot}%{_docdir}/%{name}-%{version}/LICENSE
 
 
 %changelog
+* Tue Nov 20 2012 Jens Petersen <petersen@redhat.com> - 0.10-16
+- rebuild
+
 * Fri Nov 16 2012 Jens Petersen <petersen@redhat.com> - 0.10-15
 - add upstream patches for ICCCM WM_TAKE_FOCUS protocol and
   tracking currently processing event to fix focus for Java apps:
