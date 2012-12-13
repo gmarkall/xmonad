@@ -17,7 +17,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.10
-Release:        16%{?dist}
+Release:        17%{?dist}
 Summary:        A tiling window manager
 
 License:        BSD
@@ -102,6 +102,7 @@ This package provides a basic desktop configuration for xmonad.
 Summary:        xmonad GNOME session
 Requires:       %{pkg_name}-config = %{version}-%{release}
 Requires:       gnome-session, gnome-terminal
+Requires:       gnome-panel, gnome-settings-daemon
 
 %description gnome
 %{common_description}
@@ -180,6 +181,9 @@ rm %{buildroot}%{_docdir}/%{name}-%{version}/LICENSE
 
 
 %changelog
+* Thu Dec 13 2012 Jens Petersen <petersen@redhat.com> - 0.10-17
+- xmonad-gnome now requires gnome-panel and gnome-settings-daemon to start
+
 * Tue Nov 20 2012 Jens Petersen <petersen@redhat.com> - 0.10-16
 - rebuild
 
