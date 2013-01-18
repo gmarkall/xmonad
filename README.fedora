@@ -1,7 +1,7 @@
 = Packaging =
-xmonad in Fedora is provided by 3 packages:
+xmonad in Fedora is provided by 3 subpackages:
 
-- xmonad-core: just the base window manager and X session files
+- xmonad-basic: just the base window manager and X session files
 - xmonad: additionally installs the devel library files needed to configure and customize xmonad
 - xmonad-gnome: additionally includes a gnome session file and requires gnome-session and gnome-terminal
 
@@ -17,12 +17,13 @@ To activate the gnome-panel menu use Alt+Super+Button3 or Alt+Button3.
 
 = xmonad-start =
 For new users without "~/.xmonad/", Fedora's xmonad-start script
-displays "man xmonad" in an xterm to provide help initially.
+displays "man xmonad" in a terminal to provide help initially.
 
 To stop this behaviour, just create "~/.xmonad/".
 
-With the xmonad-gnome or xmonad packages installed, xmonad-start will create
-a basic "~/.xmonad/xmonad.hs" file configured for desktops.
+With the xmonad, xmonad-config, or xmonad packages installed,
+xmonad-start will create a basic "~/.xmonad/xmonad.hs" file
+configured for desktops.
 
 = Configuration references =
 - xmonad man-page

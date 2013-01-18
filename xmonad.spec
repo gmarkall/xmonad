@@ -16,8 +16,8 @@ workspace. Xinerama is fully supported, allowing windows to be tiled\
 on several screens.
 
 Name:           %{pkg_name}
-Version:        0.10
-Release:        17%{?dist}
+Version:        0.11
+Release:        1%{?dist}
 Summary:        A tiling window manager
 
 License:        BSD
@@ -30,8 +30,6 @@ Source4:        README.fedora
 Source5:        xmonad-gnome-session.desktop
 Source6:        xmonad.session
 Source7:        xmonad.hs
-Patch1:         xmonad-0.10-X11-1.6.patch
-Patch2:         xmonad-0.10-WM_TAKE_FOCUS-track-currently-processing-event.patch
 
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-rpm-macros
@@ -114,8 +112,6 @@ in a GNOME session.
 
 %prep
 %setup -q
-%patch1 -p1 -b .orig
-%patch2 -p1 -b .orig
 cp -p %SOURCE4 .
 
 
@@ -132,9 +128,9 @@ install -p -m 0755 -D %SOURCE2 %{buildroot}%{_bindir}/%{name}-start
 desktop-file-install --dir=${RPM_BUILD_ROOT}%{_datadir}/applications %{SOURCE3}
 install -p -m 0644 -D %SOURCE5 %{buildroot}%{_datadir}/xsessions/%{name}-gnome.desktop
 install -p -m 0644 -D %SOURCE6 %{buildroot}%{_datadir}/gnome-session/sessions/%{name}.session
-install -p -m 0644 -D %SOURCE7 %{buildroot}%{_datadir}/xmonad/%{name}.hs
+install -p -m 0644 -D %SOURCE7 %{buildroot}%{_datadir}/xmonad/xmonad.hs
 
-rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.hs
+rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.{hs,1,1.html}
 # ship LICENSE in xmonad-core
 rm %{buildroot}%{_docdir}/%{name}-%{version}/LICENSE
 
@@ -160,7 +156,8 @@ rm %{buildroot}%{_docdir}/%{name}-%{version}/LICENSE
 
 
 %files core
-%doc CONFIG LICENSE README man/%{name}.hs README.fedora
+%doc CONFIG LICENSE README README.fedora
+%doc man/xmonad.{hs,1{.html,.markdown}}
 %attr(755,root,root) %{_bindir}/%{name}
 %attr(755,root,root) %{_bindir}/%{name}-start
 %{_mandir}/man1/%{name}.1*
@@ -168,7 +165,7 @@ rm %{buildroot}%{_docdir}/%{name}-%{version}/LICENSE
 
 
 %files config
-%{_datadir}/xmonad/%{name}.hs
+%{_datadir}/xmonad/xmonad.hs
 
 
 %files gnome
@@ -181,6 +178,10 @@ rm %{buildroot}%{_docdir}/%{name}-%{version}/LICENSE
 
 
 %changelog
+* Fri Jan 18 2013 Jens Petersen <petersen@redhat.com> - 0.11-1
+- update to 0.11
+- X11-1.6 and WM_TAKE_FOCUS patches no longer needed
+
 * Thu Dec 13 2012 Jens Petersen <petersen@redhat.com> - 0.10-17
 - xmonad-gnome now requires gnome-panel and gnome-settings-daemon to start
 
