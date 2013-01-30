@@ -17,7 +17,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.11
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A tiling window manager
 
 License:        BSD
@@ -178,6 +178,9 @@ rm %{buildroot}%{_docdir}/%{name}-%{version}/LICENSE
 
 
 %changelog
+* Wed Jan 30 2013 Jens Petersen <petersen@redhat.com> - 0.11-2
+- try to start gnome-screensaver for gnome sessions (#902850)
+
 * Fri Jan 18 2013 Jens Petersen <petersen@redhat.com> - 0.11-1
 - update to 0.11
 - X11-1.6 and WM_TAKE_FOCUS patches no longer needed

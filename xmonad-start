@@ -26,6 +26,13 @@ else
     fi
 fi
 
+case $DESKTOP_SESSION in
+    xmonad-gnome)
+	# hack for gnome-session not starting screensaver for xmonad, etc
+	SCREENSAVER=/usr/bin/gnome-screensaver
+	[ -x "$SCREENSAVER" ] && $SCREENSAVER & ;;
+esac
+
 if [ -r $XMONAD_DIR/session ]; then
     sh $XMONAD_DIR/session
 fi
