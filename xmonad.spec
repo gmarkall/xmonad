@@ -17,7 +17,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.11
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        A tiling window manager
 
 License:        BSD
@@ -27,8 +27,7 @@ Source1:        xmonad-session.desktop
 Source2:        xmonad-start
 Source3:        xmonad.desktop
 Source4:        README.fedora
-Source5:        xmonad-gnome-session.desktop
-Source6:        xmonad.session
+Source5:        xmonad-mate-session.desktop
 Source7:        xmonad.hs
 
 BuildRequires:  ghc-Cabal-devel
@@ -54,7 +53,7 @@ Requires:       %{pkg_name}-config = %{version}-%{release}
 This is a meta-package that installs xmonad-basic and ghc-xmonad-contrib-devel,
 allowing xmonad to be customized with "~/.xmonad/xmonad.hs".
 
-To use xmonad with GNOME, please install xmonad-gnome.
+To use xmonad with GNOME/MATE, please install xmonad-mate.
 
 
 %package basic
@@ -71,7 +70,7 @@ Obsoletes:      %{pkg_name}-core < 0.10-5
 This meta-package allows running the default basic upstream xmonad
 configuration with xterm and dmenu.
 
-If you want to customize xmonad, please install xmonad or xmonad-gnome.
+If you want to customize xmonad, please install xmonad or xmonad-mate.
 
 
 %package core
@@ -83,7 +82,7 @@ Requires:       xorg-x11-apps
 This package just provides the core xmonad window manager program.
 
 To run the default xmonad configuration you should install xmonad-basic.
-If you want to customize xmonad please install either xmonad or xmonad-gnome.
+If you want to customize xmonad please install either xmonad or xmonad-mate.
 
 
 %package config
@@ -96,18 +95,19 @@ Requires:       ghc-xmonad-contrib-devel
 This package provides a basic desktop configuration for xmonad.
 
 
-%package gnome
-Summary:        xmonad GNOME session
+%package mate
+Summary:        xmonad MATE session
 Requires:       %{pkg_name}-config = %{version}-%{release}
-Requires:       gnome-session, gnome-terminal
-Requires:       gnome-panel, gnome-settings-daemon
+Requires:       mate-session-manager, mate-terminal
+Requires:       mate-panel, mate-settings-daemon
+Obsoletes:      xmonad-gnome < 0.11-3
 
-%description gnome
+%description mate
 %{common_description}
 
-This package adds a "xmonad-gnome" X session configuration
+This package adds a "xmonad-mate" X session configuration
 so that xmonad can be started easily from GDM to run
-in a GNOME session.
+in a MATE session.
 
 
 %prep
@@ -126,8 +126,7 @@ install -p -m 0644 -D man/%{name}.1 %{buildroot}%{_mandir}/man1/%{name}.1
 install -p -m 0644 -D %SOURCE1 %{buildroot}%{_datadir}/xsessions/%{name}.desktop
 install -p -m 0755 -D %SOURCE2 %{buildroot}%{_bindir}/%{name}-start
 desktop-file-install --dir=${RPM_BUILD_ROOT}%{_datadir}/applications %{SOURCE3}
-install -p -m 0644 -D %SOURCE5 %{buildroot}%{_datadir}/xsessions/%{name}-gnome.desktop
-install -p -m 0644 -D %SOURCE6 %{buildroot}%{_datadir}/gnome-session/sessions/%{name}.session
+install -p -m 0644 -D %SOURCE5 %{buildroot}%{_datadir}/xsessions/%{name}-mate.desktop
 install -p -m 0644 -D %SOURCE7 %{buildroot}%{_datadir}/xmonad/xmonad.hs
 
 rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.{hs,1,1.html}
@@ -168,9 +167,8 @@ rm %{buildroot}%{_docdir}/%{name}-%{version}/LICENSE
 %{_datadir}/xmonad/xmonad.hs
 
 
-%files gnome
-%{_datadir}/xsessions/%{name}-gnome.desktop
-%{_datadir}/gnome-session/sessions/%{name}.session
+%files mate
+%{_datadir}/xsessions/%{name}-mate.desktop
 
 
 %ghc_files LICENSE
@@ -178,6 +176,12 @@ rm %{buildroot}%{_docdir}/%{name}-%{version}/LICENSE
 
 
 %changelog
+* Mon Feb 25 2013 Jens Petersen <petersen@redhat.com> - 0.11-3
+- xmonad-gnome subpackage renamed to xmonad-mate
+  since gnome-panel in f19 is gone
+- corresponding renamings from gnome to mate
+- forward-port xmonad-start arg from f16
+
 * Wed Jan 30 2013 Jens Petersen <petersen@redhat.com> - 0.11-2
 - try to start gnome-screensaver for gnome sessions (#902850)
 

@@ -13,7 +13,7 @@ if [ ! -d $XMONAD_DIR ]; then
     fi
     # display the manpage
     case $DESKTOP_SESSION in
-	xmonad-gnome) TERM_CMD="gnome-terminal -x" ;;
+	xmonad-mate) TERM_CMD="mate-terminal -x" ;;
 	*) TERM_CMD="xterm -e" ;;
     esac
     (sleep 5; $TERM_CMD man xmonad) &
@@ -27,14 +27,22 @@ else
 fi
 
 case $DESKTOP_SESSION in
-    xmonad-gnome)
+    xmonad-mate)
 	# hack for gnome-session not starting screensaver for xmonad, etc
-	SCREENSAVER=/usr/bin/gnome-screensaver
-	[ -x "$SCREENSAVER" ] && $SCREENSAVER & ;;
+	SCREENSAVER=/usr/bin/mate-screensaver
+# FIXME STILL NEEDED?	[ -x "$SCREENSAVER" ] && $SCREENSAVER & ;;
 esac
 
 if [ -r $XMONAD_DIR/session ]; then
     sh $XMONAD_DIR/session
 fi
 
-xmonad
+if [ -n "$*" ]; then
+    if [ -d $XMONAD_DIR -a "$(ls -t $XMONAD_DIR | head -1)" = "xmonad.hs" ]; then
+	xmonad --recompile
+    fi
+    xmonad &
+    $*
+else
+    xmonad
+fi

@@ -3,17 +3,13 @@ xmonad in Fedora is provided by 3 subpackages:
 
 - xmonad-basic: just the base window manager and X session files
 - xmonad: additionally installs the devel library files needed to configure and customize xmonad
-- xmonad-gnome: additionally includes a gnome session file and requires gnome-session and gnome-terminal
+- xmonad-mate: additionally includes a mate session file and requires mate-session-manager and terminal
 
 = Starting from GDM =
 xmonad can be started from GDM by selecting "xmonad" in the session menu.
 
-For GNOME support please install xmonad-gnome
-and select "xmonad GNOME" in GDM's session menu, which will run
-"gnome-session --session=xmonad".
-
-= Gnome Panel =
-To activate the gnome-panel menu use Alt+Super+Button3 or Alt+Button3.
+For MATE support please install xmonad-mate
+and select "xmonad MATE" in GDM's session menu.
 
 = xmonad-start =
 For new users without "~/.xmonad/", Fedora's xmonad-start script
