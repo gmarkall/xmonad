@@ -17,7 +17,7 @@ on several screens.
 
 Name:           %{pkg_name}
 Version:        0.11
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        A tiling window manager
 
 License:        BSD
@@ -176,6 +176,9 @@ rm %{buildroot}%{_docdir}/%{name}-%{version}/LICENSE
 
 
 %changelog
+* Fri Mar 22 2013 Jens Petersen <petersen@redhat.com> - 0.11-4
+- rebuild
+
 * Mon Feb 25 2013 Jens Petersen <petersen@redhat.com> - 0.11-3
 - xmonad-gnome subpackage renamed to xmonad-mate
   since gnome-panel in f19 is gone
