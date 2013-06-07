@@ -1,23 +1,10 @@
 # https://fedoraproject.org/wiki/Packaging:Haskell
-# https://fedoraproject.org/wiki/PackagingDrafts/Haskell
 
 %global pkg_name xmonad
 
-%global common_summary XMonad tiling window manager
-
-%global common_description xmonad is a tiling window manager for X. Windows are arranged\
-automatically to tile the screen without gaps or overlap, maximising\
-screen use. All features of the window manager are accessible from\
-the keyboard: a mouse is strictly optional. xmonad is written and\
-extensible in Haskell. Custom layout algorithms, and other\
-extensions, may be written by the user in config files. Layouts are\
-applied dynamically, and different layouts may be used on each\
-workspace. Xinerama is fully supported, allowing windows to be tiled\
-on several screens.
-
 Name:           %{pkg_name}
 Version:        0.11
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        A tiling window manager
 
 License:        BSD
@@ -48,12 +35,38 @@ Requires:       %{pkg_name}-basic = %{version}-%{release}
 Requires:       %{pkg_name}-config = %{version}-%{release}
 
 %description
-%{common_description}
+xmonad is a tiling window manager for X. Windows are arranged
+automatically to tile the screen without gaps or overlap, maximising
+screen use. All features of the window manager are accessible from
+the keyboard: a mouse is strictly optional. xmonad is written and
+extensible in Haskell. Custom layout algorithms, and other
+extensions, may be written by the user in config files. Layouts are
+applied dynamically, and different layouts may be used on each
+workspace. Xinerama is fully supported, allowing windows to be tiled
+on several screens.
 
 This is a meta-package that installs xmonad-basic and ghc-xmonad-contrib-devel,
 allowing xmonad to be customized with "~/.xmonad/xmonad.hs".
 
 To use xmonad with GNOME/MATE, please install xmonad-mate.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
 
 
 %package basic
@@ -65,7 +78,15 @@ Requires:       dmenu
 Obsoletes:      %{pkg_name}-core < 0.10-5
 
 %description basic
-%{common_description}
+xmonad is a tiling window manager for X. Windows are arranged
+automatically to tile the screen without gaps or overlap, maximising
+screen use. All features of the window manager are accessible from
+the keyboard: a mouse is strictly optional. xmonad is written and
+extensible in Haskell. Custom layout algorithms, and other
+extensions, may be written by the user in config files. Layouts are
+applied dynamically, and different layouts may be used on each
+workspace. Xinerama is fully supported, allowing windows to be tiled
+on several screens.
 
 This meta-package allows running the default basic upstream xmonad
 configuration with xterm and dmenu.
@@ -103,7 +124,15 @@ Requires:       mate-panel, mate-settings-daemon
 Obsoletes:      xmonad-gnome < 0.11-3
 
 %description mate
-%{common_description}
+xmonad is a tiling window manager for X. Windows are arranged
+automatically to tile the screen without gaps or overlap, maximising
+screen use. All features of the window manager are accessible from
+the keyboard: a mouse is strictly optional. xmonad is written and
+extensible in Haskell. Custom layout algorithms, and other
+extensions, may be written by the user in config files. Layouts are
+applied dynamically, and different layouts may be used on each
+workspace. Xinerama is fully supported, allowing windows to be tiled
+on several screens.
 
 This package adds a "xmonad-mate" X session configuration
 so that xmonad can be started easily from GDM to run
@@ -134,17 +163,12 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.{hs,1,1.html}
 rm %{buildroot}%{_docdir}/%{name}-%{version}/LICENSE
 
 
-%ghc_package
-
-%ghc_description
-
-
-%ghc_devel_package
-
-%ghc_devel_description
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
 
 
-%ghc_devel_post_postun
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
 
 
 %files
@@ -171,11 +195,18 @@ rm %{buildroot}%{_docdir}/%{name}-%{version}/LICENSE
 %{_datadir}/xsessions/%{name}-mate.desktop
 
 
-%ghc_files LICENSE
+%files -n ghc-%{name} -f ghc-%{name}.files
+%doc LICENSE
+
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %doc STYLE
 
 
 %changelog
+* Fri Jun 07 2013 Jens Petersen <petersen@redhat.com>
+- update to new simplified Haskell Packaging Guidelines
+
 * Fri Mar 22 2013 Jens Petersen <petersen@redhat.com> - 0.11-4
 - rebuild
 
