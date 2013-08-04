@@ -4,7 +4,7 @@
 
 Name:           %{pkg_name}
 Version:        0.11
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        A tiling window manager
 
 License:        BSD
@@ -204,6 +204,9 @@ rm %{buildroot}%{_docdir}/%{name}-%{version}/LICENSE
 
 
 %changelog
+* Sun Aug 04 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.11-6
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
+
 * Fri Jun 07 2013 Jens Petersen <petersen@redhat.com>
 - update to new simplified Haskell Packaging Guidelines
 
