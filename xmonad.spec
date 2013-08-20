@@ -31,8 +31,8 @@ BuildRequires:  ghc-unix-devel
 BuildRequires:  ghc-utf8-string-devel
 # End cabal-rpm deps
 BuildRequires:  desktop-file-utils
-Requires:       %{pkg_name}-basic = %{version}-%{release}
-Requires:       %{pkg_name}-config = %{version}-%{release}
+Requires:       xmonad-basic = %{version}-%{release}
+Requires:       xmonad-config = %{version}-%{release}
 
 %description
 xmonad is a tiling window manager for X. Windows are arranged
@@ -71,11 +71,11 @@ This package provides the Haskell %{name} library development files.
 
 %package basic
 Summary:        A tiling window manager
-Requires:       %{pkg_name}-core = %{version}-%{release}
+Requires:       xmonad-core = %{version}-%{release}
 # required until there is a command to open a system-default xterminal
 Requires:       xterm
 Requires:       dmenu
-Obsoletes:      %{pkg_name}-core < 0.10-5
+Obsoletes:      xmonad-core < 0.10-5
 
 %description basic
 xmonad is a tiling window manager for X. Windows are arranged
@@ -108,8 +108,8 @@ If you want to customize xmonad please install either xmonad or xmonad-mate.
 
 %package config
 Summary:        xmonad config
-Requires:       %{pkg_name}-core = %{version}-%{release}
-Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
+Requires:       xmonad-core = %{version}-%{release}
+Requires:       ghc-xmonad-devel = %{version}-%{release}
 Requires:       ghc-xmonad-contrib-devel
 
 %description config
@@ -118,7 +118,7 @@ This package provides a basic desktop configuration for xmonad.
 
 %package mate
 Summary:        xmonad MATE session
-Requires:       %{pkg_name}-config = %{version}-%{release}
+Requires:       xmonad-config = %{version}-%{release}
 Requires:       mate-session-manager, mate-terminal
 Requires:       mate-panel, mate-settings-daemon
 Obsoletes:      xmonad-gnome < 0.11-3
@@ -160,7 +160,7 @@ install -p -m 0644 -D %SOURCE7 %{buildroot}%{_datadir}/xmonad/xmonad.hs
 
 rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.{hs,1,1.html}
 # ship LICENSE in xmonad-core
-rm %{buildroot}%{_docdir}/%{name}-%{version}/LICENSE
+rm %{buildroot}%{_pkgdocdir}/LICENSE
 
 
 %post -n ghc-%{name}-devel
@@ -204,10 +204,13 @@ rm %{buildroot}%{_docdir}/%{name}-%{version}/LICENSE
 
 
 %changelog
-* Sun Aug 04 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.11-6
+* Mon Aug 19 2013 Jens Petersen <petersen@redhat.com> - 0.11-6
+- use new _pkgdocdir to handled unversioned docdir
+
+* Sun Aug 04 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org>
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
-* Fri Jun 07 2013 Jens Petersen <petersen@redhat.com>
+* Fri Jun 07 2013 Jens Petersen <petersen@redhat.com> - 0.11-5
 - update to new simplified Haskell Packaging Guidelines
 
 * Fri Mar 22 2013 Jens Petersen <petersen@redhat.com> - 0.11-4
