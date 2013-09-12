@@ -24,7 +24,6 @@ fi
 
 XMONADSTART_CACHEDIR=$HOME/.cache/xmonad-start
 NO_DIALOG_FILE=$HOME/.cache/xmonad-start/no-startup-dialog
-
 if [ -x "/usr/bin/zenity" -a ! -r "$NO_DIALOG_FILE" ]; then
     if ! zenity --question --text="To open an terminal press: Alt-Shift-Return\n\nManpage is available: man xmonad\n\n${INFO:+$INFO\n\n}\nShow this dialog next time?"; then
 	mkdir -p $XMONADSTART_CACHEDIR
