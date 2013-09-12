@@ -12,14 +12,12 @@ For MATE support please install xmonad-mate
 and select "xmonad MATE" in GDM's session menu.
 
 = xmonad-start =
-For new users without "~/.xmonad/", Fedora's xmonad-start script
-displays "man xmonad" in a terminal to provide help initially.
-
-To stop this behaviour, just create "~/.xmonad/".
+Fedora's xmonad-start script starts up xmonad and
+displays a welcome dialog when initially run.
 
 With the xmonad, xmonad-config, or xmonad packages installed,
 xmonad-start will create a basic "~/.xmonad/xmonad.hs" file
-configured for desktops.
+configured for desktops, and pre-compile it if necessary.
 
 = Configuration references =
 - xmonad man-page

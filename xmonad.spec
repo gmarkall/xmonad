@@ -4,7 +4,7 @@
 
 Name:           %{pkg_name}
 Version:        0.11
-Release:        7%{?dist}
+Release:        8%{?dist}
 Summary:        A tiling window manager
 
 License:        BSD
@@ -208,6 +208,9 @@ rm %{buildroot}%{_pkgdocdir}/LICENSE
 
 
 %changelog
+* Thu Sep 12 2013 Jens Petersen <petersen@redhat.com> - 0.11-8
+- update README.fedora
+
 * Thu Sep 12 2013 Jens Petersen <petersen@redhat.com> - 0.11-7
 - mate-panel requires mate-file-manager-schemas to run (see #1007219)
 - popup a zenity dialog for first-time users rather than manpage in terminal
