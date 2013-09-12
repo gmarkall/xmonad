@@ -4,7 +4,7 @@
 
 Name:           %{pkg_name}
 Version:        0.11
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        A tiling window manager
 
 License:        BSD
@@ -76,6 +76,7 @@ Requires:       xmonad-core = %{version}-%{release}
 Requires:       xterm
 Requires:       dmenu
 Obsoletes:      xmonad-core < 0.10-5
+Requires:       zenity
 
 %description basic
 xmonad is a tiling window manager for X. Windows are arranged
@@ -94,6 +95,16 @@ configuration with xterm and dmenu.
 If you want to customize xmonad, please install xmonad or xmonad-mate.
 
 
+%package config
+Summary:        xmonad config
+Requires:       xmonad-core = %{version}-%{release}
+Requires:       ghc-xmonad-devel = %{version}-%{release}
+Requires:       ghc-xmonad-contrib-devel
+
+%description config
+This package provides a basic desktop configuration for xmonad.
+
+
 %package core
 Summary:        A tiling window manager
 # for xmessage
@@ -106,22 +117,15 @@ To run the default xmonad configuration you should install xmonad-basic.
 If you want to customize xmonad please install either xmonad or xmonad-mate.
 
 
-%package config
-Summary:        xmonad config
-Requires:       xmonad-core = %{version}-%{release}
-Requires:       ghc-xmonad-devel = %{version}-%{release}
-Requires:       ghc-xmonad-contrib-devel
-
-%description config
-This package provides a basic desktop configuration for xmonad.
-
-
 %package mate
 Summary:        xmonad MATE session
 Requires:       xmonad-config = %{version}-%{release}
 Requires:       mate-session-manager, mate-terminal
 Requires:       mate-panel, mate-settings-daemon
 Obsoletes:      xmonad-gnome < 0.11-3
+# this makes mate-panel work without installing all of @mate
+# https://bugzilla.redhat.com/show_bug.cgi?id=1007219
+Requires:       mate-file-manager-schemas
 
 %description mate
 xmonad is a tiling window manager for X. Windows are arranged
@@ -178,6 +182,10 @@ rm %{buildroot}%{_pkgdocdir}/LICENSE
 %{_datadir}/xsessions/%{name}.desktop
 
 
+%files config
+%{_datadir}/xmonad/xmonad.hs
+
+
 %files core
 %doc CONFIG LICENSE README README.fedora
 %doc man/xmonad.{hs,1{.html,.markdown}}
@@ -185,10 +193,6 @@ rm %{buildroot}%{_pkgdocdir}/LICENSE
 %attr(755,root,root) %{_bindir}/%{name}-start
 %{_mandir}/man1/%{name}.1*
 %{_datadir}/applications/%{name}.desktop
-
-
-%files config
-%{_datadir}/xmonad/xmonad.hs
 
 
 %files mate
@@ -204,6 +208,10 @@ rm %{buildroot}%{_pkgdocdir}/LICENSE
 
 
 %changelog
+* Thu Sep 12 2013 Jens Petersen <petersen@redhat.com> - 0.11-7
+- mate-panel requires mate-file-manager-schemas to run (see #1007219)
+- popup a zenity dialog for first-time users rather than manpage in terminal
+
 * Mon Aug 19 2013 Jens Petersen <petersen@redhat.com> - 0.11-6
 - use new _pkgdocdir to handled unversioned docdir
 

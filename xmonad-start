@@ -9,16 +9,12 @@ if [ ! -d $XMONAD_DIR ]; then
 	mkdir $XMONAD_DIR
 	cp -p /usr/share/xmonad/xmonad.hs $XMONAD_DIR
     else
-	echo "xmonad-start: install xmonad-config to customize"
+	INFO="Install xmonad, xmonad-mate, or xmonad-config to customize xmonad."
+	echo "xmonad-start: $INFO"
     fi
-    # display the manpage
-    case $DESKTOP_SESSION in
-	xmonad-mate) TERM_CMD="mate-terminal -x" ;;
-	*) TERM_CMD="xterm -e" ;;
-    esac
-    (sleep 5; $TERM_CMD man xmonad) &
 else
     XMONAD_CUSTOM=$XMONAD_DIR/xmonad-$(uname -i)-linux
+    # recompile if broken shared libs after an upgrade
     if [ -r $XMONAD_DIR/xmonad.hs -a -x $XMONAD_CUSTOM ]; then
 	if ldd $XMONAD_CUSTOM | grep -q "not found"; then
 	    xmonad --recompile
@@ -26,12 +22,15 @@ else
     fi
 fi
 
-case $DESKTOP_SESSION in
-    xmonad-mate)
-	# hack for gnome-session not starting screensaver for xmonad, etc
-	SCREENSAVER=/usr/bin/mate-screensaver
-# FIXME STILL NEEDED?	[ -x "$SCREENSAVER" ] && $SCREENSAVER & ;;
-esac
+XMONADSTART_CACHEDIR=$HOME/.cache/xmonad-start
+NO_DIALOG_FILE=$HOME/.cache/xmonad-start/no-startup-dialog
+
+if [ -x "/usr/bin/zenity" -a ! -r "$NO_DIALOG_FILE" ]; then
+    if ! zenity --question --text="To open an terminal press: Alt-Shift-Return\n\nManpage is available: man xmonad\n\n${INFO:+$INFO\n\n}\nShow this dialog next time?"; then
+	mkdir -p $XMONADSTART_CACHEDIR
+	touch $NO_DIALOG_FILE
+    fi
+fi
 
 if [ -r $XMONAD_DIR/session ]; then
     sh $XMONAD_DIR/session
