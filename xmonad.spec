@@ -4,7 +4,7 @@
 
 Name:           %{pkg_name}
 Version:        0.11
-Release:        8%{?dist}
+Release:        9%{?dist}
 Summary:        A tiling window manager
 
 License:        BSD
@@ -123,9 +123,6 @@ Requires:       xmonad-config = %{version}-%{release}
 Requires:       mate-session-manager, mate-terminal
 Requires:       mate-panel, mate-settings-daemon
 Obsoletes:      xmonad-gnome < 0.11-3
-# this makes mate-panel work without installing all of @mate
-# https://bugzilla.redhat.com/show_bug.cgi?id=1007219
-Requires:       mate-file-manager-schemas
 
 %description mate
 xmonad is a tiling window manager for X. Windows are arranged
@@ -208,6 +205,10 @@ rm %{buildroot}%{_pkgdocdir}/LICENSE
 
 
 %changelog
+* Fri Sep 13 2013 Jens Petersen <petersen@redhat.com> - 0.11-9
+- drop the mate-file-manager-schemas requires since mate-panel has it now
+  (#1007219)
+
 * Thu Sep 12 2013 Jens Petersen <petersen@redhat.com> - 0.11-8
 - update README.fedora
 
