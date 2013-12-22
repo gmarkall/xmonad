@@ -4,7 +4,7 @@
 
 Name:           %{pkg_name}
 Version:        0.11
-Release:        9%{?dist}
+Release:        10%{?dist}
 Summary:        A tiling window manager
 
 License:        BSD
@@ -155,7 +155,7 @@ cp -p %SOURCE4 .
 install -p -m 0644 -D man/%{name}.1 %{buildroot}%{_mandir}/man1/%{name}.1
 install -p -m 0644 -D %SOURCE1 %{buildroot}%{_datadir}/xsessions/%{name}.desktop
 install -p -m 0755 -D %SOURCE2 %{buildroot}%{_bindir}/%{name}-start
-desktop-file-install --dir=${RPM_BUILD_ROOT}%{_datadir}/applications %{SOURCE3}
+desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE3}
 install -p -m 0644 -D %SOURCE5 %{buildroot}%{_datadir}/xsessions/%{name}-mate.desktop
 install -p -m 0644 -D %SOURCE7 %{buildroot}%{_datadir}/xmonad/xmonad.hs
 
@@ -205,6 +205,9 @@ rm %{buildroot}%{_pkgdocdir}/LICENSE
 
 
 %changelog
+* Sun Dec 22 2013 Jens Petersen <petersen@redhat.com> - 0.11-10
+- add message about installing xmonad.hs to xmonad-start dialog
+
 * Fri Sep 13 2013 Jens Petersen <petersen@redhat.com> - 0.11-9
 - drop the mate-file-manager-schemas requires since mate-panel has it now
   (#1007219)
