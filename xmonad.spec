@@ -4,7 +4,7 @@
 
 Name:           %{pkg_name}
 Version:        0.11
-Release:        10%{?dist}
+Release:        11%{?dist}
 Summary:        A tiling window manager
 
 License:        BSD
@@ -161,7 +161,7 @@ install -p -m 0644 -D %SOURCE7 %{buildroot}%{_datadir}/xmonad/xmonad.hs
 
 rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.{hs,1,1.html}
 # ship LICENSE in xmonad-core
-rm %{buildroot}%{_pkgdocdir}/LICENSE
+rm %{buildroot}%{_docdir}/%{name}*/LICENSE
 
 
 %post -n ghc-%{name}-devel
@@ -205,6 +205,9 @@ rm %{buildroot}%{_pkgdocdir}/LICENSE
 
 
 %changelog
+* Tue Apr 22 2014 Jens Petersen <petersen@redhat.com> - 0.11-11
+- no _pkgdocdir in EL7
+
 * Sun Dec 22 2013 Jens Petersen <petersen@redhat.com> - 0.11-10
 - add message about installing xmonad.hs to xmonad-start dialog
 
