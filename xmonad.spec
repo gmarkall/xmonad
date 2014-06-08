@@ -4,7 +4,7 @@
 
 Name:           %{pkg_name}
 Version:        0.11
-Release:        11%{?dist}
+Release:        12%{?dist}
 Summary:        A tiling window manager
 
 License:        BSD
@@ -205,6 +205,9 @@ rm %{buildroot}%{_docdir}/%{name}*/LICENSE
 
 
 %changelog
+* Sun Jun 08 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.11-12
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
 * Tue Apr 22 2014 Jens Petersen <petersen@redhat.com> - 0.11-11
 - no _pkgdocdir in EL7
 
