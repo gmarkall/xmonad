@@ -4,7 +4,7 @@
 
 Name:           %{pkg_name}
 Version:        0.11
-Release:        13%{?dist}
+Release:        14%{?dist}
 Summary:        A tiling window manager
 
 License:        BSD
@@ -205,6 +205,9 @@ rm %{buildroot}%{_docdir}/%{name}*/LICENSE
 
 
 %changelog
+* Fri Jun 19 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.11-14
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
 * Mon Aug 18 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.11-13
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
