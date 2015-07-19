@@ -3,13 +3,13 @@
 %global pkg_name xmonad
 
 Name:           %{pkg_name}
-Version:        0.11
-Release:        14%{?dist}
+Version:        0.11.1
+Release:        1%{?dist}
 Summary:        A tiling window manager
 
 License:        BSD
-URL:            http://hackage.haskell.org/package/%{name}
-Source0:        http://hackage.haskell.org/packages/archive/%{name}/%{version}/%{name}-%{version}.tar.gz
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
 Source1:        xmonad-session.desktop
 Source2:        xmonad-start
 Source3:        xmonad.desktop
@@ -184,7 +184,8 @@ rm %{buildroot}%{_docdir}/%{name}*/LICENSE
 
 
 %files core
-%doc CONFIG LICENSE README README.fedora
+%license LICENSE
+%doc CONFIG README README.fedora
 %doc man/xmonad.{hs,1{.html,.markdown}}
 %attr(755,root,root) %{_bindir}/%{name}
 %attr(755,root,root) %{_bindir}/%{name}-start
@@ -197,7 +198,7 @@ rm %{buildroot}%{_docdir}/%{name}*/LICENSE
 
 
 %files -n ghc-%{name} -f ghc-%{name}.files
-%doc LICENSE
+%license LICENSE
 
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
@@ -205,6 +206,9 @@ rm %{buildroot}%{_docdir}/%{name}*/LICENSE
 
 
 %changelog
+* Sun Jul 19 2015 Ben Boeckel <mathstuf@gmail.com> - 0.11.1-1
+- Update to 0.11.1
+
 * Fri Jun 19 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.11-14
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
