@@ -4,7 +4,7 @@
 
 Name:           %{pkg_name}
 Version:        0.11.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A tiling window manager
 
 License:        BSD
@@ -206,6 +206,10 @@ rm %{buildroot}%{_docdir}/%{name}*/LICENSE
 
 
 %changelog
+* Wed Aug  5 2015 Jens Petersen <petersen@redhat.com> - 0.11.1-2
+- use _JAVA_AWT_WM_NONREPARENTING=1 to handle Java apps correctly
+  (#1061568, thanks to Erik Streb del Toro)
+
 * Sun Jul 19 2015 Ben Boeckel <mathstuf@gmail.com> - 0.11.1-1
 - Update to 0.11.1
 

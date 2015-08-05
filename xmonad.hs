@@ -1,6 +1,6 @@
 -- default desktop configuration for Fedora
 
-import System.Posix.Env (getEnv)
+import System.Posix.Env (getEnv, putEnv)
 import Data.Maybe (maybe)
 
 import XMonad
@@ -11,6 +11,7 @@ import XMonad.Config.Xfce
 
 main = do
      session <- getEnv "DESKTOP_SESSION"
+     putEnv "_JAVA_AWT_WM_NONREPARENTING=1"
      xmonad  $ maybe desktopConfig desktop session
 
 desktop "gnome" = gnomeConfig
