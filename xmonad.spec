@@ -4,7 +4,7 @@
 
 Name:           %{pkg_name}
 Version:        0.11.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        A tiling window manager
 
 License:        BSD
@@ -206,6 +206,9 @@ rm %{buildroot}%{_docdir}/%{name}*/LICENSE
 
 
 %changelog
+* Mon Sep 28 2015 Jens Petersen <petersen@redhat.com> - 0.11.1-3
+- revert adding _JAVA_AWT_WM_NONREPARENTING since it seems unnecessary now
+
 * Wed Aug  5 2015 Jens Petersen <petersen@redhat.com> - 0.11.1-2
 - use _JAVA_AWT_WM_NONREPARENTING=1 to handle Java apps correctly
   (#1061568, thanks to Erik Streb del Toro)
