@@ -143,6 +143,7 @@ in a MATE session.
 %prep
 %setup -q
 cp -p %SOURCE4 .
+cabal-tweak-dep-ver utf8-string '< 0.4' '< 1.1'
 
 
 %build
@@ -208,6 +209,7 @@ rm %{buildroot}%{_docdir}/%{name}*/LICENSE
 %changelog
 * Mon Sep 28 2015 Jens Petersen <petersen@redhat.com> - 0.11.1-3
 - revert adding _JAVA_AWT_WM_NONREPARENTING since it seems unnecessary now
+- allow building with utf8-string 1.0
 
 * Wed Aug  5 2015 Jens Petersen <petersen@redhat.com> - 0.11.1-2
 - use _JAVA_AWT_WM_NONREPARENTING=1 to handle Java apps correctly
