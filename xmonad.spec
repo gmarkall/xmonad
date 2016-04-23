@@ -151,7 +151,6 @@ in a MATE session.
 %prep
 %setup -q
 cp -p %SOURCE4 .
-cabal-tweak-dep-ver utf8-string '< 0.4' '< 1.1'
 
 
 %build
