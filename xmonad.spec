@@ -2,9 +2,11 @@
 
 %global pkg_name xmonad
 
+%bcond_with tests
+
 Name:           %{pkg_name}
-Version:        0.11.1
-Release:        4%{?dist}
+Version:        0.12
+Release:        1%{?dist}
 Summary:        A tiling window manager
 
 License:        BSD
@@ -20,30 +22,35 @@ Source7:        xmonad.hs
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-rpm-macros
 # Begin cabal-rpm deps:
+BuildRequires:  chrpath
 BuildRequires:  ghc-X11-devel
 BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-data-default-devel
 BuildRequires:  ghc-directory-devel
 BuildRequires:  ghc-extensible-exceptions-devel
 BuildRequires:  ghc-filepath-devel
 BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-process-devel
+BuildRequires:  ghc-setlocale-devel
 BuildRequires:  ghc-unix-devel
 BuildRequires:  ghc-utf8-string-devel
+%if %{with tests}
+BuildRequires:  ghc-QuickCheck-devel
+%endif
 # End cabal-rpm deps
 BuildRequires:  desktop-file-utils
 Requires:       xmonad-basic = %{version}-%{release}
 Requires:       xmonad-config = %{version}-%{release}
 
 %description
-xmonad is a tiling window manager for X. Windows are arranged
-automatically to tile the screen without gaps or overlap, maximising
-screen use. All features of the window manager are accessible from
-the keyboard: a mouse is strictly optional. xmonad is written and
-extensible in Haskell. Custom layout algorithms, and other
-extensions, may be written by the user in config files. Layouts are
-applied dynamically, and different layouts may be used on each
-workspace. Xinerama is fully supported, allowing windows to be tiled
-on several screens.
+Xmonad is a tiling window manager for X. Windows are arranged automatically to
+tile the screen without gaps or overlap, maximising screen use. All features of
+the window manager are accessible from the keyboard: a mouse is strictly
+optional. xmonad is written and extensible in Haskell. Custom layout
+algorithms, and other extensions, may be written by the user in config files.
+Layouts are applied dynamically, and different layouts may be used on each
+workspace. Xinerama is fully supported, allowing windows to be tiled on several
+screens.
 
 This is a meta-package that installs xmonad-basic and ghc-xmonad-contrib-devel,
 allowing xmonad to be customized with "~/.xmonad/xmonad.hs".
@@ -60,10 +67,11 @@ This package provides the Haskell %{name} shared library.
 
 %package -n ghc-%{name}-devel
 Summary:        Haskell %{name} library development files
+Provides:       ghc-%{name}-static = %{version}-%{release}
 Requires:       ghc-compiler = %{ghc_version}
 Requires(post): ghc-compiler = %{ghc_version}
 Requires(postun): ghc-compiler = %{ghc_version}
-Requires:       ghc-%{name} = %{version}-%{release}
+Requires:       ghc-%{name}%{?_isa} = %{version}-%{release}
 
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
@@ -153,6 +161,8 @@ cabal-tweak-dep-ver utf8-string '< 0.4' '< 1.1'
 %install
 %ghc_lib_install
 
+%ghc_fix_dynamic_rpath %{pkg_name}
+
 install -p -m 0644 -D man/%{name}.1 %{buildroot}%{_mandir}/man1/%{name}.1
 install -p -m 0644 -D %SOURCE1 %{buildroot}%{_datadir}/xsessions/%{name}.desktop
 install -p -m 0755 -D %SOURCE2 %{buildroot}%{_bindir}/%{name}-start
@@ -162,7 +172,13 @@ install -p -m 0644 -D %SOURCE7 %{buildroot}%{_datadir}/xmonad/xmonad.hs
 
 rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.{hs,1,1.html}
 # ship LICENSE in xmonad-core
-rm %{buildroot}%{_docdir}/%{name}*/LICENSE
+rm %{buildroot}%{ghc_pkgdocdir}/LICENSE
+
+
+%check
+%if %{with tests}
+%cabal test
+%endif
 
 
 %post -n ghc-%{name}-devel
@@ -186,7 +202,7 @@ rm %{buildroot}%{_docdir}/%{name}*/LICENSE
 
 %files core
 %license LICENSE
-%doc CONFIG README README.fedora
+%doc README.fedora README.md TODO
 %doc man/xmonad.{hs,1{.html,.markdown}}
 %attr(755,root,root) %{_bindir}/%{name}
 %attr(755,root,root) %{_bindir}/%{name}-start
@@ -207,6 +223,10 @@ rm %{buildroot}%{_docdir}/%{name}*/LICENSE
 
 
 %changelog
+* Sat Apr 23 2016 Ben Boeckel <mathstuf@gmail.com> - 0.12-1
+- update to 0.12
+- sync with cabal-rpm-0.9.10
+
 * Fri Feb 05 2016 Fedora Release Engineering <releng@fedoraproject.org> - 0.11.1-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
