@@ -172,13 +172,9 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.{hs,1,1.html}
 
 %ghc_fix_dynamic_rpath %{pkg_name}
 
-rm %{buildroot}%{ghc_pkgdocdir}/LICENSE
-
 
 %check
-%if %{with tests}
-%cabal test
-%endif
+%cabal_test
 
 
 %post -n ghc-%{name}-devel
