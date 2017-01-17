@@ -7,7 +7,7 @@
 
 Name:           %{pkg_name}
 Version:        0.12
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        A tiling window manager
 
 License:        BSD
@@ -219,6 +219,9 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.{hs,1,1.html}
 
 
 %changelog
+* Tue Jan 17 2017 Jens Petersen <petersen@redhat.com> - 0.12-3
+- xmonad-start now starts gnome-keyring if installed (Simon Guest, #1413338)
+
 * Thu Jun 30 2016 Jens Petersen <petersen@redhat.com> - 0.12-2
 - rebuild
 
