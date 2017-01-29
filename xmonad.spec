@@ -172,6 +172,8 @@ rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.{hs,1,1.html}
 
 %ghc_fix_dynamic_rpath %{pkg_name}
 
+mv %{buildroot}%{?_defaultlicensedir}/%{name}{,-core}
+
 
 %check
 %cabal_test
