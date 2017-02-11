@@ -7,7 +7,7 @@
 
 Name:           %{pkg_name}
 Version:        0.12
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        A tiling window manager
 
 License:        BSD
@@ -221,6 +221,9 @@ mv %{buildroot}%{?_defaultlicensedir}/%{name}{,-core}
 
 
 %changelog
+* Sat Feb 11 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0.12-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
+
 * Tue Jan 17 2017 Jens Petersen <petersen@redhat.com> - 0.12-3
 - xmonad-start now starts gnome-keyring if installed (Simon Guest, #1413338)
 
