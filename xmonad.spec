@@ -2,6 +2,7 @@
 # https://fedoraproject.org/wiki/Packaging:Haskell
 
 %global pkg_name xmonad
+%global pkgver %{pkg_name}-%{version}
 
 %bcond_with tests
 
@@ -12,7 +13,7 @@ Summary:        A tiling window manager
 
 License:        BSD
 Url:            https://hackage.haskell.org/package/%{name}
-Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+Source0:        https://hackage.haskell.org/package/%{pkgver}/%{pkgver}.tar.gz
 Source1:        xmonad-session.desktop
 Source2:        xmonad-start
 Source3:        xmonad.desktop
@@ -170,7 +171,7 @@ install -p -m 0644 -D %SOURCE7 %{buildroot}%{_datadir}/xmonad/xmonad.hs
 
 rm %{buildroot}%{_datadir}/%{name}-%{version}/man/xmonad.{hs,1,1.html}
 
-%ghc_fix_rpath %{pkg_name}-%{version}
+%ghc_fix_rpath %{pkgver}
 
 mv %{buildroot}%{_defaultlicensedir}/%{name}{,-core}
 
