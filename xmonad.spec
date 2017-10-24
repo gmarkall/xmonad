@@ -8,7 +8,7 @@
 
 Name:           %{pkg_name}
 Version:        0.13
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        A tiling window manager
 
 License:        BSD
@@ -20,6 +20,8 @@ Source3:        xmonad.desktop
 Source4:        README.fedora
 Source5:        xmonad-mate-session.desktop
 Source7:        xmonad.hs
+
+Patch0:         xmonad_issue87.patch
 
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-rpm-macros
@@ -154,6 +156,7 @@ in a MATE session.
 %setup -q
 cp -p %SOURCE4 .
 
+%patch0 -p1
 
 %build
 %ghc_lib_build
@@ -222,6 +225,9 @@ mv %{buildroot}%{_defaultlicensedir}/%{name}{,-core}
 
 
 %changelog
+* Tue Oct 24 2017 Graham Markall <hello@big-grey.co.uk> - 0.13-4
+- Add patch for Issue #87: https://github.com/xmonad/xmonad/pull/88
+
 * Thu Aug 03 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0.13-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
 
