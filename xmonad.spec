@@ -13,7 +13,7 @@ Summary:        A tiling window manager
 
 License:        BSD
 Url:            https://hackage.haskell.org/package/%{name}
-Source0:        https://hackage.haskell.org/package/%{pkgver}/%{pkgver}.tar.gz
+Source0:        xmonad-0.13.tar.gz
 Source1:        xmonad-session.desktop
 Source2:        xmonad-start
 Source3:        xmonad.desktop
